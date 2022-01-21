@@ -1,0 +1,45 @@
+trigger:
+  branches:
+    include: [main, develop, "release-*" ]
+  paths:
+    exclude: [README.md,  CHANGELOG.md, CODE_OF_CONDUCT.md, LICENSE.md, NuGet.Config, .github_changelog_generator, .gitignore]
+  tags:
+    include: ["v*"]
+
+# PR always trigger build
+pr:
+  autoCancel: true
+
+# add nf-tools repo to resources (for Azure Pipelines templates)
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      name: nanoframework/nf-tools
+      endpoint: nanoframework
+
+pool:
+  vmImage: 'windows-2019'
+
+variables:
+  DOTNET_NOLOGO: true
+  solution: 'nanoframework.SignalR.Client.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  nugetPackageName: 'nanoframework.SignalR.Client'
+
+steps:
+
+# step from template @ nf-tools repo
+# build steps only
+- template: azure-pipelines-templates/class-lib-build.yml@templates  
+  parameters:
+    sonarCloudProject: 'nanoframework_nanoframework.SignalR.Client'
+
+# step from template @ nf-tools repo
+# report error
+- template: azure-pipelines-templates/discord-webhook-task.yml@templates  
+  parameters:
+    status: 'failure'
+    webhookUrl: '$(DiscordWebhook)'
+    message: ''
