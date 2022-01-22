@@ -1,0 +1,340 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.Device.WiFi</name>
+    </assembly>
+    <members>
+        <member name="T:nanoFramework.Networking.WiFiNetworkHelper">
+            <summary>
+            Network helper class providing helper methods to assist on connecting to a WiFi network.
+            </summary>
+        </member>
+        <member name="F:nanoFramework.Networking.WiFiNetworkHelper._helperInstanciated">
+            <summary>
+            This flag will make sure there is only one and only call to any of the helper methods.
+            </summary>
+        </member>
+        <member name="P:nanoFramework.Networking.WiFiNetworkHelper.NetworkReady">
+            <summary>
+            Event signaling that networking it's ready.
+            </summary>
+            <remarks>
+            The conditions for this are setup in the call to <see cref="M:nanoFramework.Networking.WiFiNetworkHelper.SetupNetworkHelper(System.Boolean)"/>. 
+            It will be a composition of network connected, IpAddress available and valid system <see cref="T:System.DateTime"/>.</remarks>
+        </member>
+        <member name="P:nanoFramework.Networking.WiFiNetworkHelper.Status">
+            <summary>
+            Status of NetworkHelper.
+            </summary>
+        </member>
+        <member name="P:nanoFramework.Networking.WiFiNetworkHelper.HelperException">
+            <summary>
+            Exception that occurred when waiting for the network to become ready.
+            </summary>
+        </member>
+        <member name="M:nanoFramework.Networking.WiFiNetworkHelper.SetupNetworkHelper(System.Boolean)">
+            <summary>
+            This method will setup the network configurations so that the <see cref="P:nanoFramework.Networking.WiFiNetworkHelper.NetworkReady"/> event will fire when the required conditions are met.
+            That will be the network connection to be up, having a valid IpAddress and optionally for a valid date and time to become available.
+            </summary>
+            <param name="requiresDateTime">Set to <see langword="true"/> if valid date and time are required.</param>
+            <exception cref="T:System.InvalidOperationException">If any of the <see cref="T:nanoFramework.Networking.NetworkHelper"/> methods is called more than once.</exception>
+            <exception cref="T:System.NotSupportedException">There is no network interface configured. Open the 'Edit Network Configuration' in Device Explorer and configure one.</exception>
+        </member>
+        <member name="M:nanoFramework.Networking.WiFiNetworkHelper.SetupNetworkHelper(nanoFramework.Networking.IPConfiguration,System.Boolean)">
+            <summary>
+            This method will setup the network configurations so that the <see cref="P:nanoFramework.Networking.WiFiNetworkHelper.NetworkReady"/> event will fire when the required conditions are met.
+            That will be the network connection to be up, having a valid IpAddress and optionally for a valid date and time to become available.
+            </summary>
+            <param name="ipConfiguration">The static IP configuration you want to apply.</param>
+            <param name="requiresDateTime">Set to <see langword="true"/> if valid date and time are required.</param>
+            <exception cref="T:System.NotSupportedException">There is no network interface configured. Open the 'Edit Network Configuration' in Device Explorer and configure one.</exception>
+        </member>
+        <member name="M:nanoFramework.Networking.WiFiNetworkHelper.SetupNetworkHelper(System.String,System.String,System.Device.WiFi.WiFiReconnectionKind,System.Boolean)">
+            <summary>
+            This method will setup the network configurations so that the <see cref="P:nanoFramework.Networking.WiFiNetworkHelper.NetworkReady"/> event will fire when the required conditions are met.
+            That will be the network connection to be up, having a valid IpAddress and optionally for a valid date and time to become available.
+            </summary>
+            <param name="requiresDateTime">Set to <see langword="true"/> if valid date and time are required.</param>
+            <param name="ssid">The SSID of the network you are trying to connect to.</param>
+            <param name="password">The password associated to the SSID of the network you are trying to connect to.</param>
+            <param name="reconnectionKind">The <see cref="T:System.Device.WiFi.WiFiReconnectionKind"/> to setup for the connection.</param>
+            <exception cref="T:System.InvalidOperationException">If any of the <see cref="T:nanoFramework.Networking.NetworkHelper"/> methods is called more than once.</exception>
+            <exception cref="T:System.NotSupportedException">There is no network interface configured. Open the 'Edit Network Configuration' in Device Explorer and configure one.</exception>
+        </member>
+        <member name="M:nanoFramework.Networking.WiFiNetworkHelper.ConnectDhcp(System.String,System.String,System.Device.WiFi.WiFiReconnectionKind,System.Boolean,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            This method will connect the network with DHCP enabled, for your SSID and try to connect to it with the credentials you've passed. This will save as well
+            the configuration of your network.
+            </summary>
+            <param name="ssid">The SSID of the network you are trying to connect to.</param>
+            <param name="password">The password associated to the SSID of the network you are trying to connect to.</param>
+            <param name="reconnectionKind">The <see cref="T:System.Device.WiFi.WiFiReconnectionKind"/> to setup for the connection.</param>
+            <param name="requiresDateTime">Set to <see langword="true"/> if valid date and time are required.</param>
+            <param name="wifiAdapter">The index of the WiFi adapter to be used. Relevant only if there are multiple WiFi adapters.</param>
+            <param name="token">A <see cref="T:System.Threading.CancellationToken"/> used for timing out the operation.</param>
+            <returns><see langword="true"/> on success. On failure returns <see langword="false"/> and details with the cause of the failure are made available in the <see cref="P:nanoFramework.Networking.WiFiNetworkHelper.Status"/> property</returns>
+        </member>
+        <member name="M:nanoFramework.Networking.WiFiNetworkHelper.ConnectFixAddress(System.String,System.String,nanoFramework.Networking.IPConfiguration,System.Device.WiFi.WiFiReconnectionKind,System.Boolean,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            This method will connect the network with the static IP address you are providing, for your SSID and try to connect to it with the credentials you've passed. This will save as well
+            the configuration of your network.
+            </summary>
+            <param name="ssid">The SSID you are trying to connect to.</param>
+            <param name="password">The password associated to the SSID you are trying to connect to.</param>
+            <param name="ipConfiguration">The static IPv4 configuration to apply to the WiFi network interface.</param>
+            <param name="reconnectionKind">The <see cref="T:System.Device.WiFi.WiFiReconnectionKind"/> to setup for the connection.</param>
+            <param name="requiresDateTime">Set to <see langword="true"/> if valid date and time are required.</param>
+            <param name="wifiAdapter">The index of the WiFi adapter to be used. Relevant only if there are multiple WiFi adapters.</param>
+            <param name="token">A <see cref="T:System.Threading.CancellationToken"/> used for timing out the operation.</param>
+            <returns><see langword="true"/> on success. On failure returns <see langword="false"/> and details with the cause of the failure are made available in the <see cref="P:nanoFramework.Networking.WiFiNetworkHelper.Status"/> property</returns>
+        </member>
+        <member name="M:nanoFramework.Networking.WiFiNetworkHelper.ScanAndConnectDhcp(System.String,System.String,System.Device.WiFi.WiFiReconnectionKind,System.Boolean,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            This method will scan and connect the network with DHCP enabled, for your SSID and try to connect to it with the credentials you've passed. This will save as well
+            the configuration of your network. 
+            </summary>
+            <param name="ssid">The SSID you are trying to connect to.</param>
+            <param name="password">The password associated to the SSID you are trying to connect to.</param>
+            <param name="reconnectionKind">The reconnection type to the network.</param>
+            <param name="requiresDateTime">Set to <see langword="true"/> if valid date and time are required.</param>
+            <param name="wifiAdapter">The index of the WiFi adapter to be used. Relevant only if there are multiple WiFi adapters.</param>
+            <param name="token">A <see cref="T:System.Threading.CancellationToken"/> used for timing out the operation.</param>
+            <returns><see langword="true"/> on success. On failure returns <see langword="false"/> and details with the cause of the failure are made available in the <see cref="P:nanoFramework.Networking.WiFiNetworkHelper.Status"/> property</returns>
+        </member>
+        <member name="M:nanoFramework.Networking.WiFiNetworkHelper.Reconnect(System.Boolean,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            This method will connect the network, the information used to connect is the one already stored on the device.
+            </summary>
+            <param name="requiresDateTime">Set to <see langword="true"/> if valid date and time are required.</param>
+            <param name="wifiAdapter">The index of the WiFi adapter to be used. Relevant only if there are multiple WiFi adapters.</param>
+            <param name="token">A <see cref="T:System.Threading.CancellationToken"/> used for timing out the operation.</param>
+            <returns><see langword="true"/> on success. On failure returns <see langword="false"/> and details with the cause of the failure are made available in the <see cref="P:nanoFramework.Networking.WiFiNetworkHelper.Status"/> property</returns>
+            <remarks>
+            This function can be called only if an existing network has been setup previously and if the credentials are valid.
+            </remarks>
+        </member>
+        <member name="M:nanoFramework.Networking.WiFiNetworkHelper.SetupHelper(System.Boolean)">
+            <summary>
+            Perform setup of the various fields and events, along with any of the required event handlers.
+            </summary>
+            <param name="setupEvents">Set true to setup the events. Required for the thread approach. Not required for the CancelationToken implementation.</param>
+        </member>
+        <member name="M:nanoFramework.Networking.WiFiNetworkHelper.ResetInstance">
+            <summary>
+            Method to reset internal fields to it's defaults
+            ONLY TO BE USED BY UNIT TESTS
+            </summary>
+        </member>
+        <member name="M:System.Device.WiFi.WiFiEventListener.ProcessEvent(System.UInt32,System.UInt32,System.DateTime)">
+            <summary>
+            Process an event
+            </summary>
+            <param name="data1"> bits 0-8 = subCategory, bits 9-15=category, bits 16-31=data1 </param>
+            <param name="data2"> data2 </param>
+            <param name="time"></param>
+            <returns></returns>
+        </member>
+        <member name="T:System.Device.WiFi.AvailableNetworksChangedEventHandler">
+            <summary>
+            Event raised when a scan completes on this WiFi adapter. 
+            </summary>
+        </member>
+        <member name="T:System.Device.WiFi.WiFiAdapter">
+            <summary>
+            Provides a means to scan for nearby WiFi access points, enumerate those that are found, and connect to an access point.
+            </summary>
+        </member>
+        <member name="E:System.Device.WiFi.WiFiAdapter.AvailableNetworksChanged">
+            <summary>
+            Event raised when a scan completes on this WiFi adapter. 
+            </summary>
+        </member>
+        <member name="P:System.Device.WiFi.WiFiAdapter.NetworkInterface">
+            <summary>
+            Gets the network interface number associatted with this WiFi adapter
+            </summary>
+        </member>
+        <member name="P:System.Device.WiFi.WiFiAdapter.NetworkReport">
+            <summary>
+            Gets a list of available networks populated by the last WiFi scan on this WiFiNetworkAdapter.
+            </summary>
+        </member>
+        <member name="M:System.Device.WiFi.WiFiAdapter.Connect(System.Device.WiFi.WiFiAvailableNetwork,System.Device.WiFi.WiFiReconnectionKind,System.String)">
+            <summary>
+            Connect this WiFi device to the specified network, with the specified pass-phrase and reconnection policy.
+            </summary>
+            <param name="availableNetwork">Describes the WiFi network to be connected.</param>
+            <param name="reconnectionKind">Specifies how to reconnect if the connection is lost.</param>
+            <param name="passwordCredential">The pass-phrase to be used to connect to the access point.</param>
+            <returns>
+            On successful conclusion of the operation, returns an object that describes the result of the connect operation.
+            </returns>
+        </member>
+        <member name="M:System.Device.WiFi.WiFiAdapter.Connect(System.String,System.Device.WiFi.WiFiReconnectionKind,System.String)">
+            <summary>
+            Connect this WiFi device to the specified network (using SSID string), with the specified pass-phrase and reconnection policy.
+            </summary>
+            <param name="ssid">Describes the WiFi network to be connected.</param>
+            <param name="reconnectionKind">Specifies how to reconnect if the connection is lost.</param>
+            <param name="passwordCredential">The pass-phrase to be used to connect to the access point.</param>
+            <returns>
+            On successful conclusion of the operation, returns an object that describes the result of the connect operation.
+            </returns>
+        </member>
+        <member name="M:System.Device.WiFi.WiFiAdapter.Disconnect">
+            <summary>
+            Disconnects any active WiFi connection through this adapter.
+            </summary>
+        </member>
+        <member name="M:System.Device.WiFi.WiFiAdapter.FindAllAdapters">
+            <summary>
+            A static method that enumerates all the WiFi adapters in the system.
+            </summary>
+            <returns>>On successful completion, returns an array of WiFiAdapter objects</returns>
+        </member>
+        <member name="M:System.Device.WiFi.WiFiAdapter.ScanAsync">
+            <summary>
+            Directs this adapter to initiate an asynchronous network scan.
+            </summary>
+            <remarks>On successful completion, returns a list of networks scanned by this adapter signaled by the AvailableNetworksChanged event.
+            Use NetworkReport to retrive the list of available Networks.
+            </remarks>
+        </member>
+        <member name="M:System.Device.WiFi.WiFiAdapter.Finalize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:System.Device.WiFi.WiFiAdapter.Dispose">
+            <summary>
+            Dispose WiFiAdapter
+            </summary>
+        </member>
+        <member name="T:System.Device.WiFi.WiFiAvailableNetwork">
+            <summary>
+            Describes an available WiFi network.
+            </summary>
+        </member>
+        <member name="P:System.Device.WiFi.WiFiAvailableNetwork.Bsid">
+            <summary>
+            Gets the MAC address of the access point.
+            </summary>
+        </member>
+        <member name="P:System.Device.WiFi.WiFiAvailableNetwork.Ssid">
+            <summary>
+            Gets the SSID (name) of the network.
+            </summary>
+        </member>
+        <member name="P:System.Device.WiFi.WiFiAvailableNetwork.NetworkKind">
+            <summary>
+            Gets a value describing the kind of network being described.
+            </summary>
+        </member>
+        <member name="P:System.Device.WiFi.WiFiAvailableNetwork.NetworkRssiInDecibelMilliwatts">
+            <summary>
+            Gets the signal strength of the network in Ddm
+            </summary>
+        </member>
+        <member name="P:System.Device.WiFi.WiFiAvailableNetwork.SignalBars">
+            <summary>
+            Gets the strength of the signal as a number of bars.
+            </summary>
+        </member>
+        <member name="T:System.Device.WiFi.WiFiConnectionResult">
+            <summary>
+            Describes the results of an attempt to connect to a WiFi network.
+            </summary>
+        </member>
+        <member name="P:System.Device.WiFi.WiFiConnectionResult.ConnectionStatus">
+            <summary>
+            Gets the connection result value.
+            </summary>
+        </member>
+        <member name="T:System.Device.WiFi.WiFiConnectionStatus">
+            <summary>
+            Status of the connection attempt.
+            </summary>
+        </member>
+        <member name="F:System.Device.WiFi.WiFiConnectionStatus.AccessRevoked">
+            <summary>
+            Connection failed because access to the network has been revoked.
+            </summary>
+        </member>
+        <member name="F:System.Device.WiFi.WiFiConnectionStatus.InvalidCredential">
+            <summary>
+            Connection failed because an invalid credential was presented.
+            </summary>
+        </member>
+        <member name="F:System.Device.WiFi.WiFiConnectionStatus.NetworkNotAvailable">
+            <summary>
+            Connection failed because the network is not available.
+            </summary>
+        </member>
+        <member name="F:System.Device.WiFi.WiFiConnectionStatus.Success">
+            <summary>
+            Connection succeeded.
+            </summary>
+        </member>
+        <member name="F:System.Device.WiFi.WiFiConnectionStatus.Timeout">
+            <summary>
+            Connection failed because the connection attempt timed out.
+            </summary>
+        </member>
+        <member name="F:System.Device.WiFi.WiFiConnectionStatus.UnspecifiedFailure">
+            <summary>
+            Connection failed for a reason other than those in this list.
+            </summary>
+        </member>
+        <member name="F:System.Device.WiFi.WiFiConnectionStatus.UnsupportedAuthenticationProtocol">
+            <summary>
+            Connection failed because the authentication protocol is not supported.
+            </summary>
+        </member>
+        <member name="T:System.Device.WiFi.WiFiNetworkKind">
+            <summary>
+            Describes the kinds of WiFi networks.
+            </summary>
+        </member>
+        <member name="F:System.Device.WiFi.WiFiNetworkKind.Adhoc">
+            <summary>
+            An independent (IBSS) network.
+            </summary>
+        </member>
+        <member name="F:System.Device.WiFi.WiFiNetworkKind.Any">
+            <summary>
+            Either an infrastructure or independent network.
+            </summary>
+        </member>
+        <member name="F:System.Device.WiFi.WiFiNetworkKind.Infrastructure">
+            <summary>
+            An infrastructure network.
+            </summary>
+        </member>
+        <member name="T:System.Device.WiFi.WiFiNetworkReport">
+            <summary>
+            Contains the result of a network scan operation.
+            </summary>
+        </member>
+        <member name="P:System.Device.WiFi.WiFiNetworkReport.AvailableNetworks">
+            <summary>
+            A list of available networks.
+            </summary>
+        </member>
+        <member name="T:System.Device.WiFi.WiFiReconnectionKind">
+            <summary>
+            Describes whether to automatically reconnect to this network.
+            </summary>
+        </member>
+        <member name="F:System.Device.WiFi.WiFiReconnectionKind.Automatic">
+            <summary>
+            Reconnect automatically.
+            </summary>
+        </member>
+        <member name="F:System.Device.WiFi.WiFiReconnectionKind.Manual">
+            <summary>
+            Allow user to reconnect manually.
+            </summary>
+        </member>
+    </members>
+</doc>

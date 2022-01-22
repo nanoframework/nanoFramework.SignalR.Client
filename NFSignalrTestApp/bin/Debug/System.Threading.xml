@@ -1,0 +1,511 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.Threading</name>
+    </assembly>
+    <members>
+        <member name="T:System.Threading.CancellationToken">
+            <summary>
+            Propagates notification that operations should be canceled.
+            </summary>
+            <remarks>
+            <para>
+            A <see cref="T:System.Threading.CancellationToken"/> may be created directly in an unchangeable canceled or non-canceled state
+            using the CancellationToken's constructors. However, to have a CancellationToken that can change 
+            from a non-canceled to a canceled state, 
+            <see cref="T:System.Threading.CancellationTokenSource">CancellationTokenSource</see> must be used.
+            CancellationTokenSource exposes the associated CancellationToken that may be canceled by the source through its 
+            <see cref="P:System.Threading.CancellationTokenSource.Token">Token</see> property. 
+            </para>
+            <para>
+            Once canceled, a token may not transition to a non-canceled state, and a token whose 
+            <see cref="P:System.Threading.CancellationToken.CanBeCanceled"/> is false will never change to one that can be canceled.
+            </para>
+            <para>
+            All members of this struct are thread-safe and may be used concurrently from multiple threads.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:System.Threading.CancellationToken.None">
+            <summary>
+            Returns an empty CancellationToken value.
+            </summary>
+            <remarks>
+            The <see cref="T:System.Threading.CancellationToken"/> value returned by this property will be non-cancelable by default.
+            </remarks>
+        </member>
+        <member name="P:System.Threading.CancellationToken.IsCancellationRequested">
+            <summary>
+            Gets whether cancellation has been requested for this token.
+            </summary>
+            <value>Whether cancellation has been requested for this token.</value>
+            <remarks>
+            <para>
+            This property indicates whether cancellation has been requested for this token, 
+            either through the token initially being construted in a canceled state, or through
+            calling <see cref="M:System.Threading.CancellationTokenSource.Cancel">Cancel</see> 
+            on the token's associated <see cref="T:System.Threading.CancellationTokenSource"/>.
+            </para>
+            <para>
+            If this property is true, it only guarantees that cancellation has been requested.  
+            It does not guarantee that every registered handler
+            has finished executing, nor that cancellation requests have finished propagating
+            to all registered handlers.  Additional synchronization may be required,
+            particularly in situations where related objects are being canceled concurrently.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:System.Threading.CancellationToken.CanBeCanceled">
+            <summary>
+            Gets whether this token is capable of being in the canceled state.
+            </summary>
+            <remarks>
+            If CanBeCanceled returns false, it is guaranteed that the token will never transition
+            into a canceled state, meaning that <see cref="P:System.Threading.CancellationToken.IsCancellationRequested"/> will never
+            return true.
+            </remarks>
+        </member>
+        <member name="P:System.Threading.CancellationToken.WaitHandle">
+            <summary>
+            Gets a <see cref="T:System.Threading.WaitHandle"/> that is signaled when the token is canceled.</summary>
+            <remarks>
+            Accessing this property causes a <see cref="T:System.Threading.WaitHandle">WaitHandle</see>
+            to be instantiated.  It is preferable to only use this property when necessary, and to then
+            dispose the associated <see cref="T:System.Threading.CancellationTokenSource"/> instance at the earliest opportunity (disposing
+            the source will dispose of this allocated handle).  The handle should not be closed or disposed directly.
+            </remarks>
+            <exception cref="T:System.ObjectDisposedException">The associated <see
+            cref="T:System.Threading.CancellationTokenSource">CancellationTokenSource</see> has been disposed.</exception>
+        </member>
+        <member name="M:System.Threading.CancellationToken.#ctor(System.Threading.CancellationTokenSource)">
+            <summary>
+            Internal constructor only a CancellationTokenSource should create a CancellationToken
+            </summary>
+        </member>
+        <member name="M:System.Threading.CancellationToken.#ctor(System.Boolean)">
+            <summary>
+            Initializes the <see cref="T:System.Threading.CancellationToken">CancellationToken</see>.
+            </summary>
+            <param name="canceled">
+            The canceled state for the token.
+            </param>
+            <remarks>
+            Tokens created with this constructor will remain in the canceled state specified
+            by the <paramref name="canceled"/> parameter.  If <paramref name="canceled"/> is false,
+            both <see cref="P:System.Threading.CancellationToken.CanBeCanceled"/> and <see cref="P:System.Threading.CancellationToken.IsCancellationRequested"/> will be false.
+            If <paramref name="canceled"/> is true,
+            both <see cref="P:System.Threading.CancellationToken.CanBeCanceled"/> and <see cref="P:System.Threading.CancellationToken.IsCancellationRequested"/> will be true. 
+            </remarks>
+        </member>
+        <member name="M:System.Threading.CancellationToken.Register(System.Action)">
+            <summary>
+            Registers a delegate that will be called when this <see cref="T:System.Threading.CancellationToken">CancellationToken</see> is canceled.
+            </summary>
+            <remarks>
+            <para>
+            If this token is already in the canceled state, the
+            delegate will be run immediately and synchronously. Any exception the delegate generates will be
+            propagated out of this method call.
+            </para>
+            <para>
+            The current <see cref="!:System.Threading.ExecutionContext">ExecutionContext</see>, if one exists, will be captured
+            along with the delegate and will be used when executing it.
+            </para>
+            </remarks>
+            <param name="callback">The delegate to be executed when the <see cref="T:System.Threading.CancellationToken">CancellationToken</see> is canceled.</param>
+            <returns>The <see cref="T:System.Threading.CancellationTokenRegistration"/> instance that can 
+            be used to deregister the callback.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="callback"/> is null.</exception>
+        </member>
+        <member name="M:System.Threading.CancellationToken.Equals(System.Threading.CancellationToken)">
+            <summary>
+            Determines whether the current <see cref="T:System.Threading.CancellationToken">CancellationToken</see> instance is equal to the 
+            specified token.
+            </summary>
+            <param name="other">The other <see cref="T:System.Threading.CancellationToken">CancellationToken</see> to which to compare this
+            instance.</param>
+            <returns>True if the instances are equal; otherwise, false. Two tokens are equal if they are associated
+            with the same <see cref="T:System.Threading.CancellationTokenSource">CancellationTokenSource</see> or if they were both constructed 
+            from public CancellationToken constructors and their <see cref="P:System.Threading.CancellationToken.IsCancellationRequested"/> values are equal.</returns>
+        </member>
+        <member name="M:System.Threading.CancellationToken.Equals(System.Object)">
+            <summary>
+            Determines whether the current <see cref="T:System.Threading.CancellationToken">CancellationToken</see> instance is equal to the 
+            specified <see cref="T:System.Object"/>.
+            </summary>
+            <param name="other">The other object to which to compare this instance.</param>
+            <returns>True if <paramref name="other"/> is a <see cref="T:System.Threading.CancellationToken">CancellationToken</see>
+            and if the two instances are equal; otherwise, false. Two tokens are equal if they are associated
+            with the same <see cref="T:System.Threading.CancellationTokenSource">CancellationTokenSource</see> or if they were both constructed 
+            from public CancellationToken constructors and their <see cref="P:System.Threading.CancellationToken.IsCancellationRequested"/> values are equal.</returns>
+            <exception cref="T:System.ObjectDisposedException">An associated <see
+            cref="T:System.Threading.CancellationTokenSource">CancellationTokenSource</see> has been disposed.</exception>
+        </member>
+        <member name="M:System.Threading.CancellationToken.GetHashCode">
+            <summary>
+            Serves as a hash function for a <see cref="T:System.Threading.CancellationToken">CancellationToken</see>.
+            </summary>
+            <returns>A hash code for the current <see cref="T:System.Threading.CancellationToken">CancellationToken</see> instance.</returns>
+        </member>
+        <member name="M:System.Threading.CancellationToken.ThrowIfCancellationRequested">
+            <summary>
+            Throws a <see cref="T:System.OperationCanceledException">OperationCanceledException</see> if
+            this token has had cancellation requested.
+            </summary>
+            <remarks>
+            This method provides functionality equivalent to:
+            <code>
+            if (token.IsCancellationRequested) 
+               throw new OperationCanceledException(token);
+            </code>
+            </remarks>
+            <exception cref="!:System.OperationCanceledException">The token has had cancellation requested.</exception>
+            <exception cref="T:System.ObjectDisposedException">The associated <see
+            cref="T:System.Threading.CancellationTokenSource">CancellationTokenSource</see> has been disposed.</exception>
+        </member>
+        <member name="T:System.Threading.CancellationTokenRegistration">
+            <summary>
+            Represents a callback delegate that has been registered with a <see cref="T:System.Threading.CancellationToken">CancellationToken</see>.
+            </summary>
+            <remarks>
+            To unregister a callback, dispose the corresponding Registration instance.
+            </remarks>
+        </member>
+        <member name="M:System.Threading.CancellationTokenRegistration.TryDeregister">
+            <summary>
+            Attempts to deregister the item. If it's already being run, this may fail.
+            Entails a full memory fence.
+            </summary>
+            <returns>True if the callback was found and deregistered, false otherwise.</returns>
+        </member>
+        <member name="M:System.Threading.CancellationTokenRegistration.Dispose">
+            <summary>
+            Disposes of the registration and unregisters the target callback from the associated 
+            <see cref="T:System.Threading.CancellationToken">CancellationToken</see>.
+            If the target callback is currently executing this method will wait until it completes, except
+            in the degenerate cases where a callback method deregisters itself.
+            </summary>
+        </member>
+        <member name="M:System.Threading.CancellationTokenRegistration.op_Equality(System.Threading.CancellationTokenRegistration,System.Threading.CancellationTokenRegistration)">
+            <summary>
+            Determines whether two <see
+            cref="T:System.Threading.CancellationTokenRegistration">CancellationTokenRegistration</see>
+            instances are equal.
+            </summary>
+            <param name="left">The first instance.</param>
+            <param name="right">The second instance.</param>
+            <returns>True if the instances are equal; otherwise, false.</returns>
+        </member>
+        <member name="M:System.Threading.CancellationTokenRegistration.op_Inequality(System.Threading.CancellationTokenRegistration,System.Threading.CancellationTokenRegistration)">
+            <summary>
+            Determines whether two <see cref="T:System.Threading.CancellationTokenRegistration">CancellationTokenRegistration</see> instances are not equal.
+            </summary>
+            <param name="left">The first instance.</param>
+            <param name="right">The second instance.</param>
+            <returns>True if the instances are not equal; otherwise, false.</returns>
+        </member>
+        <member name="M:System.Threading.CancellationTokenRegistration.Equals(System.Object)">
+            <summary>
+            Determines whether the current <see cref="T:System.Threading.CancellationTokenRegistration">CancellationTokenRegistration</see> instance is equal to the 
+            specified <see cref="T:System.Object"/>.
+            </summary> 
+            <param name="obj">The other object to which to compare this instance.</param>
+            <returns>True, if both this and <paramref name="obj"/> are equal. False, otherwise.
+            Two <see cref="T:System.Threading.CancellationTokenRegistration">CancellationTokenRegistration</see> instances are equal if
+            they both refer to the output of a single call to the same Register method of a 
+            <see cref="T:System.Threading.CancellationToken">CancellationToken</see>. 
+            </returns>
+        </member>
+        <member name="M:System.Threading.CancellationTokenRegistration.Equals(System.Threading.CancellationTokenRegistration)">
+            <summary>
+            Determines whether the current <see cref="T:System.Threading.CancellationToken">CancellationToken</see> instance is equal to the 
+            specified <see cref="T:System.Object"/>.
+            </summary> 
+            <param name="other">The other <see cref="T:System.Threading.CancellationTokenRegistration">CancellationTokenRegistration</see> to which to compare this instance.</param>
+            <returns>True, if both this and <paramref name="other"/> are equal. False, otherwise.
+            Two <see cref="T:System.Threading.CancellationTokenRegistration">CancellationTokenRegistration</see> instances are equal if
+            they both refer to the output of a single call to the same Register method of a 
+            <see cref="T:System.Threading.CancellationToken">CancellationToken</see>. 
+            </returns>
+        </member>
+        <member name="M:System.Threading.CancellationTokenRegistration.GetHashCode">
+            <summary>
+            Serves as a hash function for a <see cref="T:System.Threading.CancellationTokenRegistration">CancellationTokenRegistration.</see>.
+            </summary>
+            <returns>A hash code for the current <see cref="T:System.Threading.CancellationTokenRegistration">CancellationTokenRegistration</see> instance.</returns>
+        </member>
+        <member name="T:System.Threading.CancellationTokenSource">
+            <summary>
+            Signals to a <see cref="T:System.Threading.CancellationToken"/> that it should be canceled.
+            </summary>
+            <remarks>
+            <para>
+            <see cref="T:System.Threading.CancellationTokenSource"/> is used to instantiate a <see
+            cref="T:System.Threading.CancellationToken"/>
+            (via the source's <see cref="P:System.Threading.CancellationTokenSource.Token">Token</see> property)
+            that can be handed to operations that wish to be notified of cancellation or that can be used to
+            register asynchronous operations for cancellation. That token may have cancellation requested by
+            calling to the source's <see cref="M:System.Threading.CancellationTokenSource.Cancel">Cancel</see>
+            method.
+            </para>
+            <para>
+            All members of this class, except <see cref="M:System.Threading.CancellationTokenSource.Dispose">Dispose</see>, are thread-safe and may be used
+            concurrently from multiple threads.
+            </para>
+            </remarks>
+        </member>
+        <member name="F:System.Threading.CancellationTokenSource._threadIDExecutingCallbacks">
+            The ID of the thread currently executing the main body of CTS.Cancel()
+            this helps us to know if a call to ctr.Dispose() is running 'within' a cancellation callback.
+            This is updated as we move between the main thread calling cts.Cancel() and any syncContexts that are used to 
+            actually run the callbacks.
+        </member>
+        <member name="P:System.Threading.CancellationTokenSource.IsCancellationRequested">
+            <summary>
+            Gets whether cancellation has been requested for this <see
+            cref="T:System.Threading.CancellationTokenSource">CancellationTokenSource</see>.
+            </summary>
+            <value>Whether cancellation has been requested for this <see
+            cref="T:System.Threading.CancellationTokenSource">CancellationTokenSource</see>.</value>
+            <remarks>
+            <para>
+            This property indicates whether cancellation has been requested for this token source, such as
+            due to a call to its
+            <see cref="M:System.Threading.CancellationTokenSource.Cancel">Cancel</see> method.
+            </para>
+            <para>
+            If this property returns true, it only guarantees that cancellation has been requested. It does not
+            guarantee that every handler registered with the corresponding token has finished executing, nor
+            that cancellation requests have finished propagating to all registered handlers. Additional
+            synchronization may be required, particularly in situations where related objects are being
+            canceled concurrently.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:System.Threading.CancellationTokenSource.IsCancellationCompleted">
+            <summary>
+            A simple helper to determine whether cancellation has finished.
+            </summary>
+        </member>
+        <member name="P:System.Threading.CancellationTokenSource.IsDisposed">
+            <summary>
+            A simple helper to determine whether disposal has occured.
+            </summary>
+        </member>
+        <member name="P:System.Threading.CancellationTokenSource.ThreadIDExecutingCallbacks">
+            <summary>
+            The ID of the thread that is running callbacks.
+            </summary>
+        </member>
+        <member name="P:System.Threading.CancellationTokenSource.Token">
+            <summary>
+            Gets the <see cref="T:System.Threading.CancellationToken">CancellationToken</see>
+            associated with this <see cref="T:System.Threading.CancellationTokenSource"/>.
+            </summary>
+            <value>The <see cref="T:System.Threading.CancellationToken">CancellationToken</see>
+            associated with this <see cref="T:System.Threading.CancellationTokenSource"/>.</value>
+            <exception cref="T:System.ObjectDisposedException">The token source has been
+            disposed.</exception>
+        </member>
+        <member name="M:System.Threading.CancellationTokenSource.ThrowIfDisposed">
+            <summary>
+            Throws an exception if the source has been disposed.
+            </summary>
+        </member>
+        <member name="M:System.Threading.CancellationTokenSource.#ctor(System.Int32)">
+            <summary>
+            Constructs a <see cref="T:System.Threading.CancellationTokenSource"/> that will be canceled after a specified time span.
+            </summary>
+            <param name="millisecondsDelay">The time span to wait before canceling this <see cref="T:System.Threading.CancellationTokenSource"/></param>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            The exception that is thrown when <paramref name="millisecondsDelay"/> is less than -1.
+            </exception>
+            <remarks>
+            <para>
+            The countdown for the millisecondsDelay starts during the call to the constructor.  When the millisecondsDelay expires, 
+            the constructed <see cref="T:System.Threading.CancellationTokenSource"/> is canceled (if it has
+            not been canceled already).
+            </para>
+            <para>
+            Subsequent calls to CancelAfter will reset the millisecondsDelay for the constructed 
+            <see cref="T:System.Threading.CancellationTokenSource"/>, if it has not been
+            canceled already.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:System.Threading.CancellationTokenSource.#ctor(System.TimeSpan)">
+            <summary>
+            Constructs a <see cref="T:System.Threading.CancellationTokenSource"/> that will be canceled after a specified time span.
+            </summary>
+            <param name="delay">The time span to wait before canceling this <see cref="T:System.Threading.CancellationTokenSource"/></param>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            The exception that is thrown when <paramref name="delay"/> is less than -1 or greater than Int32.MaxValue.
+            </exception>
+            <remarks>
+            <para>
+            The countdown for the delay starts during the call to the constructor.  When the delay expires, 
+            the constructed <see cref="T:System.Threading.CancellationTokenSource"/> is canceled, if it has
+            not been canceled already.
+            </para>
+            <para>
+            Subsequent calls to CancelAfter will reset the delay for the constructed 
+            <see cref="T:System.Threading.CancellationTokenSource"/>, if it has not been
+            canceled already.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:System.Threading.CancellationTokenSource.#ctor">
+            <summary>
+            Initializes the <see cref="T:System.Threading.CancellationTokenSource"/>.
+            </summary>
+        </member>
+        <member name="M:System.Threading.CancellationTokenSource.Cancel">
+            <summary>
+            Communicates a request for cancellation.
+            </summary>
+            <remarks>
+            <para>
+            The associated <see cref="T:System.Threading.CancellationToken" /> will be
+            notified of the cancellation and will transition to a state where 
+            <see cref="P:System.Threading.CancellationToken.IsCancellationRequested">IsCancellationRequested</see> returns true. 
+            Any callbacks or cancelable operations
+            registered with the <see cref="T:System.Threading.CancellationToken"/>  will be executed.
+            </para>
+            <para>
+            Cancelable operations and callbacks registered with the token should not throw exceptions.
+            However, this overload of Cancel will aggregate any exceptions thrown into a <see cref="!:System.AggregateException"/>,
+            such that one callback throwing an exception will not prevent other registered callbacks from being executed.
+            </para>
+            <para>
+            The <see cref="T:System.Threading.ExecutionContext"/> that was captured when each callback was registered
+            will be reestablished when the callback is invoked.
+            </para>
+            </remarks>
+            <exception cref="T:System.AggregateException">An aggregate exception containing all the exceptions thrown
+            by the registered callbacks on the associated <see cref="T:System.Threading.CancellationToken"/>.</exception>
+            <exception cref="T:System.ObjectDisposedException">This <see
+            cref="T:System.Threading.CancellationTokenSource"/> has been disposed.</exception> 
+        </member>
+        <member name="M:System.Threading.CancellationTokenSource.Cancel(System.Boolean)">
+            <summary>
+            Communicates a request for cancellation.
+            </summary>
+            <remarks>
+            <para>
+            The associated <see cref="T:System.Threading.CancellationToken" /> will be
+            notified of the cancellation and will transition to a state where 
+            <see cref="P:System.Threading.CancellationToken.IsCancellationRequested">IsCancellationRequested</see> returns true. 
+            Any callbacks or cancelable operations
+            registered with the <see cref="T:System.Threading.CancellationToken"/>  will be executed.
+            </para>
+            <para>
+            Cancelable operations and callbacks registered with the token should not throw exceptions. 
+            If <paramref name="throwOnFirstException"/> is true, an exception will immediately propagate out of the
+            call to Cancel, preventing the remaining callbacks and cancelable operations from being processed.
+            If <paramref name="throwOnFirstException"/> is false, this overload will aggregate any 
+            exceptions thrown into a <see cref="!:System.AggregateException"/>,
+            such that one callback throwing an exception will not prevent other registered callbacks from being executed.
+            </para>
+            <para>
+            The <see cref="T:System.Threading.ExecutionContext"/> that was captured when each callback was registered
+            will be reestablished when the callback is invoked.
+            </para>
+            </remarks>
+            <param name="throwOnFirstException">Specifies whether exceptions should immediately propagate.</param>
+            <exception cref="T:System.AggregateException">An aggregate exception containing all the exceptions thrown
+            by the registered callbacks on the associated <see cref="T:System.Threading.CancellationToken"/>.</exception>
+            <exception cref="T:System.ObjectDisposedException">This <see
+            cref="T:System.Threading.CancellationTokenSource"/> has been disposed.</exception> 
+        </member>
+        <member name="M:System.Threading.CancellationTokenSource.CancelAfter(System.TimeSpan)">
+            <summary>
+            Schedules a Cancel operation on this <see cref="T:System.Threading.CancellationTokenSource"/>.
+            </summary>
+            <param name="delay">The time span to wait before canceling this <see
+            cref="T:System.Threading.CancellationTokenSource"/>.
+            </param>
+            <exception cref="T:System.ObjectDisposedException">The exception thrown when this <see
+            cref="T:System.Threading.CancellationTokenSource"/> has been disposed.
+            </exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            The exception thrown when <paramref name="delay"/> is less than -1 or 
+            greater than Int32.MaxValue.
+            </exception>
+            <remarks>
+            <para>
+            The countdown for the delay starts during this call.  When the delay expires, 
+            this <see cref="T:System.Threading.CancellationTokenSource"/> is canceled, if it has
+            not been canceled already.
+            </para>
+            <para>
+            Subsequent calls to CancelAfter will reset the delay for this  
+            <see cref="T:System.Threading.CancellationTokenSource"/>, if it has not been
+            canceled already.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:System.Threading.CancellationTokenSource.CancelAfter(System.Int32)">
+            <summary>
+            Schedules a Cancel operation on this <see cref="T:System.Threading.CancellationTokenSource"/>.
+            </summary>
+            <param name="millisecondsDelay">The time span to wait before canceling this <see
+            cref="T:System.Threading.CancellationTokenSource"/>.
+            </param>
+            <exception cref="T:System.ObjectDisposedException">The exception thrown when this <see
+            cref="T:System.Threading.CancellationTokenSource"/> has been disposed.
+            </exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            The exception thrown when <paramref name="millisecondsDelay"/> is less than -1.
+            </exception>
+            <remarks>
+            <para>
+            The countdown for the millisecondsDelay starts during this call.  When the millisecondsDelay expires, 
+            this <see cref="T:System.Threading.CancellationTokenSource"/> is canceled, if it has
+            not been canceled already.
+            </para>
+            <para>
+            Subsequent calls to CancelAfter will reset the millisecondsDelay for this  
+            <see cref="T:System.Threading.CancellationTokenSource"/>, if it has not been
+            canceled already.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:System.Threading.CancellationTokenSource.Dispose">
+            <summary>
+            Releases the resources used by this <see cref="T:System.Threading.CancellationTokenSource" />.
+            </summary>
+            <remarks>
+            This method is not thread-safe for any other concurrent calls.
+            </remarks>
+        </member>
+        <member name="M:System.Threading.CancellationTokenSource.Dispose(System.Boolean)">
+            <summary>
+            Releases the unmanaged resources used by the <see cref="T:System.Threading.CancellationTokenSource" /> class and optionally releases the managed resources.
+            </summary>
+            <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+        </member>
+        <member name="T:System.Threading.OperationCanceledException">
+            <summary>
+            The exception that is thrown when a CancellationToken is raised.
+            </summary>
+        </member>
+        <member name="M:System.Threading.OperationCanceledException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Threading.OperationCanceledException"/> class.
+            </summary>
+        </member>
+        <member name="M:System.Threading.OperationCanceledException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the OperationCanceledException class with a specified error message.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:System.Threading.OperationCanceledException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the OperationCanceledException class with a specified error message and a reference to the inner exception that is the cause of this exception.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception. If the innerException parameter is not a null reference (Nothing in Visual Basic), the current exception is raised in a catch block that handles the inner exception.</param>
+        </member>
+    </members>
+</doc>

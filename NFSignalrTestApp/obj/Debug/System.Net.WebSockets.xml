@@ -1,0 +1,541 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.Net.WebSockets</name>
+    </assembly>
+    <members>
+        <member name="T:System.Net.WebSockets.MessageReceivedEventHandler">
+            <summary>
+            Describes the method that will handle the event that's fired when a message that has been subscribed to has been received.
+            </summary>
+            <param name="sender">The proximity device that received the message.</param>
+            <param name="e">The proximity device that received the message.</param>
+        </member>
+        <member name="T:System.Net.WebSockets.ClientWebSocket">
+            <summary>
+            Provides a client for connecting to WebSocket services.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.ClientWebSocket.IsSSL">
+            <summary>
+            If a secure connection is used.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.ClientWebSocket.Port">
+            <summary>
+            The remote Port to connect to.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.ClientWebSocket.SslProtocol">
+            <summary>
+            Gets or sets the TLS/SSL protocol used by the <see cref="T:System.Net.WebSockets.WebSocket"/> class.
+            </summary>
+            <value>
+            One of the values defined in the <see cref="T:System.Net.Security.SslProtocols"/> enumeration.
+            </value>
+        </member>
+        <member name="P:System.Net.WebSockets.ClientWebSocket.Host">
+            <summary>
+            The remote Host name to connect to.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.ClientWebSocket.UseCustomCertificate">
+            <summary>
+            Option to use a custom certificate for authentication.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.ClientWebSocket.Prefix">
+            <summary>
+            The remote Prefix to connect to.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.ClientWebSocket.SslVerification">
+            <summary>
+            Option for SSL verification.
+            The default behavior is <see cref="F:System.Net.Security.SslVerification.CertificateRequired"/>.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.ClientWebSocket.CACertificate">
+            <summary>
+            Gets or sets the root CA certificate used to authenticate with secure
+            servers.  This certificate is used only for wss connections; ws connections do not require this.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.ClientWebSocket.UseStoredDeviceCertificate">
+            <summary>
+            Option to use the certificate stored in the device as client or server certificate. 
+            The default option is false.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.ClientWebSocket.State">
+            <summary>
+            Gets the WebSocket state of the <see cref="T:System.Net.WebSockets.ClientWebSocket"/> instance.
+            </summary>
+            <value>
+            The WebSocket state of the <see cref="T:System.Net.WebSockets.ClientWebSocket"/> instance.
+            </value>
+        </member>
+        <member name="M:System.Net.WebSockets.ClientWebSocket.#ctor(System.Net.WebSockets.ClientWebSocketOptions)">
+            <summary>
+            Creates an instance of the WebSocketClient class.
+            </summary>
+            <param name="options">Optional <see cref="T:System.Net.WebSockets.ClientWebSocketOptions"/> where extra options can be defined.</param>
+        </member>
+        <member name="M:System.Net.WebSockets.ClientWebSocket.Connect(System.String,System.Net.WebSockets.ClientWebSocketHeaders)">
+            <summary>
+            Connect to a WebSocket server.
+            </summary>
+            <param name="uri">The URI of the WebSocket server to connect to.</param>
+            <param name="headers">Optional <see cref="T:System.Net.WebSockets.ClientWebSocketHeaders"/> for setting custom headers.</param>
+        </member>
+        <member name="M:System.Net.WebSockets.ClientWebSocket.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="T:System.Net.WebSockets.ClientWebSocketOptions">
+            <summary>
+            Options to use with a <see cref="T:System.Net.WebSockets.ClientWebSocket"/> object.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.ClientWebSocketOptions.SslProtocol">
+            <summary>
+            Gets or sets the TLS/SSL protocol used by the <see cref="T:System.Net.WebSockets.WebSocket"/> class.
+            </summary>
+            <value>
+            One of the values defined in the <see cref="T:System.Net.Security.SslProtocols"/> enumeration.
+            </value>
+            <remarks>
+            This property is specific to nanoFramework. There is no equivalent in the .NET API.
+            </remarks>
+        </member>
+        <member name="P:System.Net.WebSockets.ClientWebSocketOptions.SslVerification">
+            <summary>
+            Option for SSL verification.
+            The default behavior is <see cref="F:System.Net.Security.SslVerification.NoVerification"/>.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.ClientWebSocketOptions.Certificate">
+            <summary>
+            Gets or sets a collection of client side certificate. This certificate will automatically be used when connecting to a wss:// server 
+            </summary>
+            <value>
+            The client side certificate.
+            </value>
+        </member>
+        <member name="T:System.Net.WebSockets.ClientWebSocketHeaders">
+            <summary>
+            A Dictionary to store custom Http Headers to use with the ClientWebsocket
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.ClientWebSocketHeaders.Count">
+            <summary>
+            Gets the number of headers.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.ClientWebSocketHeaders.Keys">
+            <summary>
+            Gets all header keys.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.ClientWebSocketHeaders.Values">
+            <summary>
+            Gets all header values.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.ClientWebSocketHeaders.Item(System.String)">
+            <summary>
+            Gets a value header or Sets a header value
+            </summary>
+        </member>
+        <member name="M:System.Net.WebSockets.ClientWebSocketHeaders.Remove(System.String)">
+            <summary>
+            Removes a header from the dictionary
+            </summary>
+        </member>
+        <member name="T:System.Net.WebSockets.MessageReceivedEventArgs">
+            <summary>
+            Provides data for the MessageReceived event.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.MessageReceivedEventArgs.Frame">
+            <summary>
+            The message frame received by the WebSocket. 
+            </summary>
+        </member>
+        <member name="T:System.Net.WebSockets.WebSocket">
+            <summary>
+            The WebSocket class allows applications to send and receive data after the WebSocket upgrade has completed.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.WebSocket.IsServer">
+            <summary>
+            <see langword="true"/> to indicate it's the server-side of the connection; <see langword="false"/> if it's the client-side.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.WebSocket.LastContactTimeStamp">
+            <summary>
+            The UTC time of the last received message or Controller message  
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.WebSocket.ServerTimeout">
+            <summary>
+            The timeout which specifies how long to wait for a message before closing
+            the connection. Default is 60 seconds.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.WebSocket.KeepAliveInterval">
+            <summary>
+            The interval that the client will send keep alive messages to let the
+            server know to not close the connection. Default is 30 second interval.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.WebSocket.MaxReceiveFrameSize">
+            <summary>
+            Gets the maximum allowed byte length of messages received by the WebSocket .
+            </summary>
+             <value>
+            The maximum allowed byte length of messages received by the WebSocket. Default is int.MaxValue.
+            </value>
+        </member>
+        <member name="P:System.Net.WebSockets.WebSocket.MaxFragmentSize">
+            <summary>
+            Gets or sets the maximum allowed byte length of a partial message send by the WebSocket.
+            By default if a message that exceeds the size limit it will be broken up in smaller partial messages
+            Default is 124 bytes
+            <value>
+            The maximum allowed byte length of a partial message send by the WebSocket.
+            </value>
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.WebSocket.State">
+             <summary>
+             Gets the WebSocket state of the System.Net.WebSockets.ClientWebSocket instance.
+            </summary>
+             <value>
+             The WebSocket state of the System.Net.WebSockets.ClientWebSocket instance.
+             </value>
+        </member>
+        <member name="T:System.Net.WebSockets.WebSocket.MessageReceivedEventHandler">
+            <summary>
+            Occurs when a message is received. Controller messages are handled internally and 
+            do not raise an event.
+            </summary>
+            <remarks>
+            The WebSocket will stop to receive any incoming messages including controller messages until 
+            the provided ReceiveMessageStream is completely read till the end. 
+            </remarks>
+        </member>
+        <member name="E:System.Net.WebSockets.WebSocket.ConnectionClosed">
+            <summary>
+            Occurs when the connection is closed. The connection could be closed due to an
+            error or due to either the server or client intentionally closing the connection
+            without error.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.WebSocket.RemoteEndPoint">
+            <summary>
+            Gets the Remote Endpoint where the WebSocket connects to.
+            </summary>
+            <value>
+            The Remote Endpoint where the WebSocket connects to.
+            </value>
+        </member>
+        <member name="M:System.Net.WebSockets.WebSocket.#ctor(System.Net.WebSockets.WebSocketFrame.WebSocketOptions)">
+             <summary>
+             Creates an instance of the System.Net.WebSockets.WebSocket class.
+             </summary>
+            <param name="options">Optional WebSocketOptions where extra options can be defined.</param>
+        </member>
+        <member name="M:System.Net.WebSockets.WebSocket.ConnectToStream(System.Net.Sockets.NetworkStream,System.Boolean,System.Net.Sockets.Socket)">
+            <summary>
+            Connects the WebSocket to  the specified
+            stream, which represents a web socket connection.
+            </summary>
+            <param name="stream">The stream for the connection.</param>
+            <param name="isServer"><see langword="true"/> to indicate it's the server-side of the connection; <see langword="false"/> if it's the client-side.</param>
+            <param name="socket">The socket on which the WebSocket connects to.</param>
+        </member>
+        <member name="M:System.Net.WebSockets.WebSocket.Send(System.Byte[],System.Net.WebSockets.WebSocketFrame.WebSocketMessageType,System.Int32)">
+            <summary>
+            Sends data over the System.Net.WebSockets.WebSocket connection.
+            </summary>
+            <param name="buffer">The buffer containing the message content.</param>
+            <param name="messageType">Indicates whether the application is sending a binary or text message.</param>
+            <param name="fragmentSize">Indicates whether the application is sending a binary or text message.
+            Default -1 will use the maxFragmentSize </param>
+            <returns><see langword="true"/> if the message was successfully queued for send. <see langword="false"/> otherwise.</returns>
+            <remarks>
+            Messages are buffered send synchronously using a single send thread.
+            The send message is not awaited.
+            </remarks>
+        </member>
+        <member name="M:System.Net.WebSockets.WebSocket.SendString(System.String,System.Int32)">
+            <summary>
+            Sends a text message over the System.Net.WebSockets.WebSocket connection.
+            </summary>
+            <param name="message">The text that will be send</param>
+            <param name="fragmentSize">Indicates whether the application is sending a binary or text message.
+            Default -1 will use the maxFragmentSize </param>
+            <returns><see langword="true"/> if the message was successfully queued for send. <see langword="false"/> otherwise.</returns>
+            <remarks>
+            Messages are buffered send synchronously using a single send thread.
+            The send message is not awaited.
+            </remarks>
+        </member>
+        <member name="M:System.Net.WebSockets.WebSocket.SendBytes(System.Byte[],System.Int32)">
+            <summary>
+            Sends a binary message over the System.Net.WebSockets.WebSocket connection.
+            </summary>
+            <param name="data">The binary data that will be send.</param>
+            <param name="fragmentSize">Indicates whether the application is sending a binary or text message.
+            Default -1 will use the maxFragmentSize </param>
+            <returns><see langword="true"/> if the message was successfully queued for send. <see langword="false"/> otherwise.</returns>
+            <remarks>
+            Messages are buffered send synchronously using a single send thread.
+            The send message is not awaited.
+            </remarks>
+        </member>
+        <member name="M:System.Net.WebSockets.WebSocket.Close(System.Net.WebSockets.WebSocketFrame.WebSocketCloseStatus,System.String)">
+            <summary>
+            Will start closing the WebSocket connection using the close handshake defined in the WebSocket protocol specification section 7.
+            </summary>
+            <param name="closeStatus">Indicates the reason for closing the WebSocket connection.</param>
+            <param name="statusDescription">Specifies a human readable explanation as to why the connection is closed.</param>
+            <remarks>
+            WebSocketCloseStatus.EndpointUnavailable will close the WebSocket synchronous without awaiting response.
+            </remarks>
+        </member>
+        <member name="M:System.Net.WebSockets.WebSocket.Abort">
+            <summary>
+            Aborts the WebSocket connection and cancels any pending IO operations.
+            </summary>
+        </member>
+        <member name="M:System.Net.WebSockets.WebSocket.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="E:System.Net.WebSockets.WebSocket.MessageReceived">
+            <summary>
+            Event raised when a message is received by the WebSocket. 
+            </summary>
+        </member>
+        <member name="T:System.Net.WebSockets.FragmentationType">
+            <summary>
+            Indicates the message Fragmentation Type.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.FragmentationType.NotFragmented">
+            <summary>
+            The message is not fragmented.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.FragmentationType.FirstFragment">
+            <summary>
+            Message Frame contains the first fragment of a fragmented message.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.FragmentationType.Fragment">
+            <summary>
+            Message Frame contains a next fragment of the message.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.FragmentationType.FinalFragment">
+            <summary>
+            Message frame contains the last fragment of the message. 
+            </summary>
+        </member>
+        <member name="T:System.Net.WebSockets.MessageFrame">
+            <summary>
+            The base WebSocket Message frame.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.MessageFrame.EndPoint">
+            <summary>
+            The Remote Endpoint from which the message is received.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.MessageFrame.MessageType">
+            <summary>
+            Indicates whether the current message is a UTF-8 message or a binary message.
+            </summary>
+        </member>
+        <member name="T:System.Net.WebSockets.ReceiveMessageFrame">
+            <summary>
+            The Receive Message Frame
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.ReceiveMessageFrame.Fragmentation">
+            <summary>
+            Indicates if the message is fragmented. And what fragment is received. 
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.ReceiveMessageFrame.IsFragmented">
+            <summary>
+            Indicates if the message is fragmented.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.ReceiveMessageFrame.MessageLength">
+            <summary>
+            The content length of the message in number of bytes.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.ReceiveMessageFrame.Buffer">
+            <summary>
+            Buffer holding the message content.
+            </summary>
+        </member>
+        <member name="T:System.Net.WebSockets.WebSocketFrame.WebSocketCloseStatus">
+            <summary>
+            Represents well known WebSocket close codes as defined in section 11.7 of the WebSocket protocol spec.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.WebSocketFrame.WebSocketCloseStatus.ClosedAbnormally">
+            <summary>
+            (1006) connection was closed abnormally - internal application use only
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.WebSocketFrame.WebSocketCloseStatus.NormalClosure">
+            <summary>
+            (1000) The connection has closed after the request was fulfilled.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.WebSocketFrame.WebSocketCloseStatus.EndpointUnavailable">
+            <summary>
+            (1001) Indicates an endpoint is being removed. Either the server or client will become unavailable.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.WebSocketFrame.WebSocketCloseStatus.ProtocolError">
+            <summary>
+            (1002) The client or server is terminating the connection because of a protocol error.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.WebSocketFrame.WebSocketCloseStatus.InvalidMessageType">
+            <summary>
+            (1003) The client or server is terminating the connection because it cannot accept the data type it received.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.WebSocketFrame.WebSocketCloseStatus.Reserved">
+            <summary>
+            (1004) Reserved.  The specific meaning might be defined in the future the data type it received.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.WebSocketFrame.WebSocketCloseStatus.Empty">
+            <summary>
+            No error specified - internal application use only.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.WebSocketFrame.WebSocketCloseStatus.InvalidPayloadData">
+            <summary>
+            (1007) The client or server is terminating the connection because it has received data inconsistent with the message type.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.WebSocketFrame.WebSocketCloseStatus.PolicyViolation">
+            <summary>
+            (1008) The connection will be closed because an endpoint has received a message that violates its policy.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.WebSocketFrame.WebSocketCloseStatus.MessageTooBig">
+            <summary>
+            (1009) The client or server is terminating the connection because it has received a message that is too big for it to process.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.WebSocketFrame.WebSocketCloseStatus.MandatoryExtension">
+            <summary>
+            (1010) The client is terminating the connection because it expected the server to negotiate an extension.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.WebSocketFrame.WebSocketCloseStatus.InternalServerError">
+            <summary>
+            (1011) The connection will be closed by the server because of an error on the server.
+            </summary>
+        </member>
+        <member name="T:System.Net.WebSockets.WebSocketFrame.WebSocketMessageType">
+            <summary>
+            Indicates the message type.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.WebSocketFrame.WebSocketMessageType.Text">
+            <summary>
+            The message is clear text.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.WebSocketFrame.WebSocketMessageType.Binary">
+            <summary>
+            The message is in binary format.
+            </summary>
+        </member>
+        <member name="T:System.Net.WebSockets.WebSocketFrame.WebSocketOptions">
+            <summary>
+            Options to use with a ClientWebSocket object.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.WebSocketFrame.WebSocketOptions.KeepAliveInterval">
+            <summary>
+            Gets or sets the WebSocket protocol keep-alive interval.
+            </summary>
+        </member>
+        <member name="P:System.Net.WebSockets.WebSocketFrame.WebSocketOptions.ServerTimeout">
+            <summary>
+            Gets or sets the WebSocket timeout which specifies how long to wait for a message.
+            </summary>
+            <value>
+            The WebSocket timeout which specifies how long to wait for a message.
+            </value>
+        </member>
+        <member name="P:System.Net.WebSockets.WebSocketFrame.WebSocketOptions.MaxReceiveFrameSize">
+            <summary>
+            Gets or sets the maximum allowed byte length of messages received by the WebSocket .
+            </summary>
+            <value>
+            The maximum allowed byte length of messages received by the WebSocket.
+            </value>
+        </member>
+        <member name="P:System.Net.WebSockets.WebSocketFrame.WebSocketOptions.MaxFragmentSize">
+            <summary>
+            Gets or sets the maximum allowed byte length of a partial message send by the WebSocket.
+            By default if a message that exceeds the size limit it will be broken up in smaller partial messages
+            </summary>
+            <value>
+            The maximum allowed byte length of a partial message send by the WebSocket.
+            </value>
+        </member>
+        <member name="T:System.Net.WebSockets.WebSocketFrame.WebSocketState">
+            <summary>
+            Defines the different states a WebSockets instance can be in.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.WebSocketFrame.WebSocketState.None">
+            <summary>
+            Reserved for future use.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.WebSocketFrame.WebSocketState.Connecting">
+            <summary>
+            The connection is negotiating the handshake with the remote endpoint.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.WebSocketFrame.WebSocketState.Open">
+            <summary>
+            The initial state after the HTTP handshake has been completed.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.WebSocketFrame.WebSocketState.CloseSent">
+            <summary>
+            A close message was sent to the remote endpoint.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.WebSocketFrame.WebSocketState.CloseReceived">
+            <summary>
+            A close message was received from the remote endpoint.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.WebSocketFrame.WebSocketState.Closed">
+            <summary>
+            Indicates the WebSocket close handshake completed gracefully.
+            </summary>
+        </member>
+        <member name="F:System.Net.WebSockets.WebSocketFrame.WebSocketState.Aborted">
+            <summary>
+            Reserved for future use.
+            </summary>
+        </member>
+    </members>
+</doc>
