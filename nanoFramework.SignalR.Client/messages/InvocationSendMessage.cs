@@ -4,7 +4,7 @@ using System.Text;
 
 namespace nanoFramework.SignalR.Client
 {
-    public class InvocationSendMessage
+    internal class InvocationSendMessage
     {
         public int type { get; set; }
         public string target { get; set; }

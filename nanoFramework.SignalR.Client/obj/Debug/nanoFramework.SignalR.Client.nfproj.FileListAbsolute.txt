@@ -51,3 +51,4 @@ C:\Users\feikog\source\repos\nanoFramework.SignalR.Client\nanoFramework.SignalR.
 C:\Users\feikog\source\repos\nanoFramework.SignalR.Client\nanoFramework.SignalR.Client\obj\Debug\System.Net.xml
 C:\Users\feikog\source\repos\nanoFramework.SignalR.Client\nanoFramework.SignalR.Client\obj\Debug\System.Net.WebSockets.xml
 C:\Users\feikog\source\repos\nanoFramework.SignalR.Client\nanoFramework.SignalR.Client\obj\Debug\System.Threading.xml
+C:\Users\feikog\source\repos\nanoFramework.SignalR.Client\nanoFramework.SignalR.Client\obj\Debug\nanoFramework.SignalR.Client.nfprojAssemblyReference.cache
