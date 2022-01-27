@@ -1,23 +1,23 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using System;
 using System.Collections;
-using System.Text;
-using System.Threading;
 
 namespace nanoFramework.SignalR.Client
 {
     internal class AsyncLogic
     {
-
         private ushort _asyncId = 0;
         private object _asyncIdLock = new object();
         private Hashtable _asyncBacklog = new Hashtable();
         private object _asyncBacklogLock = new object();
 
-        //call when HubConnection is closed
+        // call when HubConnection is closed
         internal void CloseAllAsyncResults()
         {
             var keys = _asyncBacklog.Keys;
-            foreach(var key in keys)
+            foreach (var key in keys)
             {
                 SetAsyncResultError("HubConnection was closed", (string)key);
             }
@@ -43,7 +43,6 @@ namespace nanoFramework.SignalR.Client
         internal void SetAsyncResultValue(object value, string invocationId)
         {
             var asyncResult = _asyncBacklog[invocationId] as AsyncResult;
-
 
             if (asyncResult != null)
             {

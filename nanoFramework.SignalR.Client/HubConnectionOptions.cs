@@ -1,6 +1,7 @@
-﻿using System;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 using System.Net.WebSockets;
-using System.Text;
 
 namespace nanoFramework.SignalR.Client
 {
@@ -15,6 +16,7 @@ namespace nanoFramework.SignalR.Client
         /// <remarks>
         /// Client will only reconnect if this is indicated by the server close message. 
         /// This reconnect function is experimental and perhaps better handled elsewhere. 
+        /// </remarks>
         public bool Reconnect { get; set; } = false;
     }
 }

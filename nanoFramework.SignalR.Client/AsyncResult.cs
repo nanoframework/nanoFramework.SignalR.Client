@@ -1,6 +1,8 @@
-﻿using nanoFramework.Json;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using nanoFramework.Json;
 using System;
-using System.Text;
 using System.Threading;
 
 namespace nanoFramework.SignalR.Client
@@ -42,12 +44,14 @@ namespace nanoFramework.SignalR.Client
         /// This is null if no errors occurred.
         /// </remarks>
         public string ErrorMessage { get; internal set; } = null;
-       
+
         /// <summary>
         /// The return Type of the invocation of <see cref="HubConnection.InvokeCoreAsync"/>.
         /// </summary>
         public Type ReturnType { get; private set; }
+
         internal string InvocationId { get; private set; }
+
         private object _value;
         private Timer _completionTimeoutTimer;
         internal AutoResetEvent _asyncResult = new AutoResetEvent(false);

@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31105.61
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "nanoFramework.SignalR.Client", "nanoFramework.SignalR.Client.nfproj", "{1DB9A81D-7B08-4AD2-AC6E-B7CD66FB78C8}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "nanoFramework.SignalR.Client", "nanoFramework.SignalR.Client\nanoFramework.SignalR.Client.nfproj", "{1DB9A81D-7B08-4AD2-AC6E-B7CD66FB78C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
