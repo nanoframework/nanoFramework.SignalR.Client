@@ -4,7 +4,9 @@ using System.Text;
 using System.Threading;
 using System.Net.WebSockets;
 using System.Net.WebSockets.WebSocketFrame;
-using nanoFramework.SignalR.Client.json;
+//using nanoFramework.SignalR.Client.json;
+using nanoFramework.Json;
+using System.Diagnostics;
 
 namespace nanoFramework.SignalR.Client
 {
@@ -321,7 +323,7 @@ namespace nanoFramework.SignalR.Client
                 {
                     nonBlockingMessage.arguments.Add(arg);
                 }
-                jsonString = JsonSerializer.SerializeObject(nonBlockingMessage);
+                jsonString =  JsonConvert.SerializeObject(nonBlockingMessage);
             }
             else
             {
@@ -337,14 +339,14 @@ namespace nanoFramework.SignalR.Client
                     invocationBlockingMessage.arguments.Add(arg);
                 }
 
-                jsonString = JsonSerializer.SerializeObject(invocationBlockingMessage);
+                jsonString = JsonConvert.SerializeObject(invocationBlockingMessage);
             }
             //send file. 
             SendMessageFromJsonString(jsonString);
         }
 
         private void WebsocketClient_MessageReceived(object sender, MessageReceivedEventArgs e)
-        {
+        {            
             if (e.Frame.MessageLength > 0)
             {
                 //not a signalr Message!
@@ -359,7 +361,7 @@ namespace nanoFramework.SignalR.Client
                     
                     if (e.Frame.Buffer.Length > 3)
                     {
-                        var errorMessage = JsonReflectionDecode.JsonDecode(Encoding.UTF8.GetString(e.Frame.Buffer, 0, e.Frame.Buffer.Length - 1), typeof(JsonHubHandshakeError)) as JsonHubHandshakeError;
+                        var errorMessage = JsonConvert.DeserializeObject(Encoding.UTF8.GetString(e.Frame.Buffer, 0, e.Frame.Buffer.Length - 1), typeof(JsonHubHandshakeError)) as JsonHubHandshakeError;
                         if (errorMessage.error != null)
                         {
                             State = HubConnectionState.Disconnected;
@@ -374,7 +376,8 @@ namespace nanoFramework.SignalR.Client
                 }
                 else
                 {
-                    var invocationMessage = JsonReflectionDecode.JsonDecode(Encoding.UTF8.GetString(e.Frame.Buffer, 0, e.Frame.Buffer.Length - 1), typeof(InvocationReceiveMessage)) as InvocationReceiveMessage;
+                    Debug.WriteLine(Encoding.UTF8.GetString(e.Frame.Buffer, 0, e.Frame.Buffer.Length - 1));
+                    var invocationMessage = JsonConvert.DeserializeObject(Encoding.UTF8.GetString(e.Frame.Buffer, 0, e.Frame.Buffer.Length - 1), typeof(InvocationReceiveMessage)) as InvocationReceiveMessage;
                     switch ((MessageType)invocationMessage.type)
                     {
                         case MessageType.Invocation:
@@ -386,8 +389,16 @@ namespace nanoFramework.SignalR.Client
                                 if(types.Length == invocationMessage.arguments.Count)
                                 {
                                     object[] onInvokeArgs = new object[types.Length];
-                                    for (int i = 0; i < types.Length; i++) {
-                                       onInvokeArgs[i] = JsonReflectionDecode.TryCastObjectType(invocationMessage.arguments[i], types[i]);
+                                    for (int i = 0; i < types.Length; i++)
+                                    {
+                                        if (types[i].FullName.StartsWith("System")) // invocationMessage.arguments[i].GetType().IndexOf("System") == 0)
+                                        {
+                                            onInvokeArgs[i] = invocationMessage.arguments[i];
+                                        }
+                                        else
+                                        {
+                                            onInvokeArgs[i] = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(invocationMessage.arguments[i]), types[i]);
+                                        }
                                     }
 
                                     handler?.Invoke(this, onInvokeArgs);
