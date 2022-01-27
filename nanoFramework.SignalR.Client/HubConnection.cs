@@ -315,7 +315,7 @@ namespace nanoFramework.SignalR.Client
                 InvocationSendMessage nonBlockingMessage = new InvocationSendMessage()
                 {
                     target = methodName,
-                    type = (int)MessageType.Invocation,
+                    type = MessageType.Invocation,
                     arguments = new ArrayList()
                 };
                 foreach (object arg in args)
@@ -329,7 +329,7 @@ namespace nanoFramework.SignalR.Client
                 var invocationBlockingMessage = new InvocationBlockingSendMessage()
                 {
                     target = methodName,
-                    type = (int)MessageType.Invocation,
+                    type = MessageType.Invocation,
                     arguments = new ArrayList(),
                     invocationId = invocationId
                 };
@@ -380,7 +380,7 @@ namespace nanoFramework.SignalR.Client
 
                     foreach (string jsonMessage in stringMessages) {
                         var invocationMessage = JsonConvert.DeserializeObject(jsonMessage, typeof(InvocationReceiveMessage)) as InvocationReceiveMessage;
-                        switch ((MessageType)invocationMessage.type)
+                        switch (invocationMessage.type)
                         {
                             case MessageType.Invocation:
                                 object[] handlerStuff = _onInvokeHandlers[invocationMessage.target] as object[];

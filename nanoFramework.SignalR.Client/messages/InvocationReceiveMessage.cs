@@ -6,7 +6,7 @@ namespace nanoFramework.SignalR.Client
 {
     internal class InvocationReceiveMessage
     {
-        public int type { get; set; }
+        public MessageType type { get; set; }
         public Hashtable headers { get; set; }
         public string invocationId { get; set; }
         public string target { get; set; }
