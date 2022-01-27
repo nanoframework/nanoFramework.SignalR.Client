@@ -346,7 +346,7 @@ namespace nanoFramework.SignalR.Client
         }
 
         private void WebsocketClient_MessageReceived(object sender, MessageReceivedEventArgs e)
-        {            
+        {
             if (e.Frame.MessageLength > 0)
             {
                 //not a signalr Message!
@@ -376,77 +376,82 @@ namespace nanoFramework.SignalR.Client
                 }
                 else
                 {
-                    Debug.WriteLine(Encoding.UTF8.GetString(e.Frame.Buffer, 0, e.Frame.Buffer.Length - 1));
-                    var invocationMessage = JsonConvert.DeserializeObject(Encoding.UTF8.GetString(e.Frame.Buffer, 0, e.Frame.Buffer.Length - 1), typeof(InvocationReceiveMessage)) as InvocationReceiveMessage;
-                    switch ((MessageType)invocationMessage.type)
-                    {
-                        case MessageType.Invocation:
-                            object[] handlerStuff = _onInvokeHandlers[invocationMessage.target] as object[];
-                            if(handlerStuff != null)
-                            {
-                                var handler = handlerStuff[0] as OnInvokeHandler;
-                                var types = handlerStuff[1] as Type[];
-                                if(types.Length == invocationMessage.arguments.Count)
-                                {
-                                    object[] onInvokeArgs = new object[types.Length];
-                                    for (int i = 0; i < types.Length; i++)
-                                    {
-                                        if (types[i].FullName.StartsWith("System")) // invocationMessage.arguments[i].GetType().IndexOf("System") == 0)
-                                        {
-                                            onInvokeArgs[i] = invocationMessage.arguments[i];
-                                        }
-                                        else
-                                        {
-                                            onInvokeArgs[i] = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(invocationMessage.arguments[i]), types[i]);
-                                        }
-                                    }
+                    //check for multiple frames in a single message
+                    string[] stringMessages = Encoding.UTF8.GetString(e.Frame.Buffer, 0, e.Frame.Buffer.Length - 1).Split((char)0x1E);
 
-                                    handler?.Invoke(this, onInvokeArgs);
+                    foreach (string jsonMessage in stringMessages) {
+                        var invocationMessage = JsonConvert.DeserializeObject(jsonMessage, typeof(InvocationReceiveMessage)) as InvocationReceiveMessage;
+                        switch ((MessageType)invocationMessage.type)
+                        {
+                            case MessageType.Invocation:
+                                object[] handlerStuff = _onInvokeHandlers[invocationMessage.target] as object[];
+                                if (handlerStuff != null)
+                                {
+                                    var handler = handlerStuff[0] as OnInvokeHandler;
+                                    var types = handlerStuff[1] as Type[];
+                                    if (types.Length == invocationMessage.arguments.Count)
+                                    {
+                                        object[] onInvokeArgs = new object[types.Length];
+                                        for (int i = 0; i < types.Length; i++)
+                                        {
+                                            string[] fullNames = types[i].FullName.Split('.');
+                                            if(fullNames.Length == 2 && fullNames[0] == "System")
+                                            {
+                                                //base types can be cast directly
+                                                onInvokeArgs[i] = invocationMessage.arguments[i];
+                                            }
+                                            else
+                                            {
+                                                onInvokeArgs[i] = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(invocationMessage.arguments[i]), types[i]);
+                                            }
+                                        }
+
+                                        handler?.Invoke(this, onInvokeArgs);
+                                        break;
+                                    }
+                                    Console.WriteLine("not a valid invocation, types don't match");
                                     break;
                                 }
-                                Console.WriteLine("not a valid invocation, types don't match");
+                                Console.WriteLine("No matchin method found");
                                 break;
-                            }
-                            Console.WriteLine("No matchin method found");
-                            break;
-                        case MessageType.Completion:
-                            if (invocationMessage.error != null && invocationMessage.error != string.Empty)
-                            {
-                                _asyncLogic.SetAsyncResultError(invocationMessage.error, invocationMessage.invocationId);
-                            }
-                            else
-                            {
-                                _asyncLogic.SetAsyncResultValue(invocationMessage.result, invocationMessage.invocationId);
-                            }
-                            break;
-                        case MessageType.Ping:
-                            // _ServerTimeoutTimer is already reset after every incoming message. No need to reset the timer here. 
-                            break;
-                        case MessageType.Close:
-                            string errorMessage = string.IsNullOrEmpty(invocationMessage.error) ? null : invocationMessage.error;
-                            if(invocationMessage.allowReconnect && ReconnectEnabled)
-                            {
-                                //Because underlying Websocket gets closed this will also try to trigger a Hardclose on the Hubconnection also.
-                                //Therefor a reconnect and hardclose can happen simultaneously
-                                Reconnecting?.Invoke(this, new SignalrEventMessageArgs() { Message = errorMessage});
-                                HardClose(true);
+                            case MessageType.Completion:
+                                if (invocationMessage.error != null && invocationMessage.error != string.Empty)
+                                {
+                                    _asyncLogic.SetAsyncResultError(invocationMessage.error, invocationMessage.invocationId);
+                                }
+                                else
+                                {
+                                    _asyncLogic.SetAsyncResultValue(invocationMessage.result, invocationMessage.invocationId);
+                                }
+                                break;
+                            case MessageType.Ping:
+                                // _ServerTimeoutTimer is already reset after every incoming message. No need to reset the timer here. 
+                                break;
+                            case MessageType.Close:
+                                string errorMessage = string.IsNullOrEmpty(invocationMessage.error) ? null : invocationMessage.error;
+                                if (invocationMessage.allowReconnect && ReconnectEnabled)
+                                {
+                                    //Because underlying Websocket gets closed this will also try to trigger a Hardclose on the Hubconnection also.
+                                    //Therefor a reconnect and hardclose can happen simultaneously
+                                    Reconnecting?.Invoke(this, new SignalrEventMessageArgs() { Message = errorMessage });
+                                    HardClose(true);
 
-                            }
-                            else
-                            {
-                                Closed?.Invoke(this, new SignalrEventMessageArgs() {Message = errorMessage } );
-                                HardClose();
-                            }
-                            break;
-                        case MessageType.StreamItem:
-                        case MessageType.StreamInvocation:
-                        case MessageType.CancelInvocation:
-                            throw new Exception("Streaming is not implemented");
-                            break;
-                        default:
-                            throw new Exception("unknown Signalr Message Type was received");
-                            break;
-                        
+                                }
+                                else
+                                {
+                                    Closed?.Invoke(this, new SignalrEventMessageArgs() { Message = errorMessage });
+                                    HardClose();
+                                }
+                                break;
+                            case MessageType.StreamItem:
+                            case MessageType.StreamInvocation:
+                            case MessageType.CancelInvocation:
+                                throw new Exception("Streaming is not implemented");
+                                break;
+                            default:
+                                throw new Exception("unknown Signalr Message Type was received");
+                                break;
+                        }
                     }
 
                     if(_serverTimeoutTimer !=null) _serverTimeoutTimer.Change((int)ServerTimeout.TotalMilliseconds, -1);
