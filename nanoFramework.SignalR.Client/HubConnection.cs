@@ -129,15 +129,26 @@ namespace nanoFramework.SignalR.Client
         /// <summary>
         /// Initializes a new instance of the <see cref="HubConnection"/> class.
         /// </summary>
-        /// <param name="uri">The websocket location of the SignalR Hub server. Websockets prefix are ws:// or wss://.</param>
+        /// <param name="uri">The web location of the SignalR Hub server.</param>
         /// <param name="headers">Optional <see cref="ClientWebSocketHeaders"/> for setting custom headers.</param>
         /// <param name="options">Optional <see cref="HubConnectionOptions"/> where extra options can be defined.</param>
-        public HubConnection(string uri, ClientWebSocketHeaders headers = null, HubConnectionOptions options = null) //reconnect enabels the client to reconnect if the Signalr server closes with a reconenct request. 
+        public HubConnection(string uri, ClientWebSocketHeaders headers = null, HubConnectionOptions options = null) //reconnect enables the client to reconnect if the Signalr server closes with a reconenct request. 
         {
             _hubConnectionOptions = options;
-            Uri = uri;
             State = HubConnectionState.Disconnected;
             if (headers != null) CustomHeaders = headers;
+            if (uri.ToLower().StartsWith("http://"))
+            {
+                Uri = "ws" + uri.Remove(0, 4);
+            }
+            else if (uri.ToLower().StartsWith("https://"))
+            {
+                Uri = "wss" + uri.Remove(0, 5);
+            }
+            else
+            {
+                Uri = uri;
+            }
         }
 
         /// <summary>
