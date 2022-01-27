@@ -119,7 +119,7 @@ namespace nanoFramework.SignalR.Client
         public ClientWebSocketHeaders CustomHeaders { get; private set; } = new ClientWebSocketHeaders();
 
 
-        // <summary>
+        /// <summary>
         /// Initializes a new instance of the <see cref="HubConnection"/> class.
         /// </summary>
         /// <param name="uri">The websocket location of the SignalR Hub server. Websockets prefix are ws:// or wss://.</param>
@@ -194,11 +194,11 @@ namespace nanoFramework.SignalR.Client
         /// <param name="methodName">The name of the server method to invoke.</param>
         /// <param name="returnType">The return type of the server method.</param>
         /// <param name="args">The arguments used to invoke the server method.</param>
-        /// <param name="timeout">The time in milliseconds the server return should be awaited, The default value is 0 uses the <see cref="ServerTimeout" /></param>
+        /// <param name="timeout">The time in milliseconds the server return should be awaited, The default value 0 uses the <see cref="ServerTimeout" /></param>
         /// <returns>
         /// A <see cref="object"/> response from the server.
         /// </returns>
-        /// /// <remarks>
+        /// <remarks>
         /// This is synchronous call that will block your thread, use <see cref="InvokeCoreAsync"/> for a nonblocking asynchronous call. 
         /// </remarks>
         public object InvokeCore(string methodName, Type returnType, object[] args, int timeout = 0)
@@ -212,11 +212,11 @@ namespace nanoFramework.SignalR.Client
         /// <param name="methodName">The name of the server method to invoke.</param>
         /// <param name="returnType">The return type of the server method.</param>
         /// <param name="args">The arguments used to invoke the server method.</param>
-        /// <param name="timeout">The time in milliseconds the server return should be awaited, The default value is 0 uses the <see cref="ServerTimeout" /></param>
+        /// <param name="timeout">The time in milliseconds the server return should be awaited, The default value 0 uses the <see cref="ServerTimeout" /></param>
         /// <returns>
         /// A <see cref="AsyncResult"/> that represents the asynchronous invoke.
         /// </returns>
-        /// /// <remarks>
+        /// <remarks>
         /// This is an asynchronous call
         /// </remarks>
         public AsyncResult InvokeCoreAsync(string methodName, Type returnType, object[] args, int timeout = 0)
