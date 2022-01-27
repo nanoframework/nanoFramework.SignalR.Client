@@ -4,7 +4,7 @@
 
 -----
 
-### Welcome to the .NET **nanoFramework** SignalR Client Library repository
+# Welcome to the .NET **nanoFramework** SignalR Client Library repository
 
 This API mirrors (as close as possible) the official .NET [Microsoft.AspNet.SignalR.Client](https://docs.microsoft.com/en-us/aspnet/core/signalr/dotnet-client). Exceptions are mainly derived from the lack of `async` and generics support in .NET **nanoFramework**.
 

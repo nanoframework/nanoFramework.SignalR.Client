@@ -53,9 +53,9 @@ namespace nanoFramework.SignalR.Client
         internal string InvocationId { get; private set; }
 
         private object _value;
-        private Timer _completionTimeoutTimer;
+        private readonly Timer _completionTimeoutTimer;
         internal AutoResetEvent _asyncResult = new AutoResetEvent(false);
-        private AsyncLogic _asyncLogic;
+        private readonly AsyncLogic _asyncLogic;
 
         internal AsyncResult(string id, Type returnType, TimeSpan timeout, AsyncLogic asyncLogic)
         {

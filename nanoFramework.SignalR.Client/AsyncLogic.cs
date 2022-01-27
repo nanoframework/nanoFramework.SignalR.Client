@@ -9,9 +9,9 @@ namespace nanoFramework.SignalR.Client
     internal class AsyncLogic
     {
         private ushort _asyncId = 0;
-        private object _asyncIdLock = new object();
-        private Hashtable _asyncBacklog = new Hashtable();
-        private object _asyncBacklogLock = new object();
+        private readonly object _asyncIdLock = new object();
+        private readonly Hashtable _asyncBacklog = new Hashtable();
+        private readonly object _asyncBacklogLock = new object();
 
         // call when HubConnection is closed
         internal void CloseAllAsyncResults()

@@ -32,12 +32,12 @@ namespace nanoFramework.SignalR.Client
         private static string handshakeJson = @"{""protocol"":""json"",""version"":1}";
 
         private ClientWebSocket _websocketClient;
-        private AutoResetEvent _awaitHandsHake = new AutoResetEvent(false);
-        private Hashtable _onInvokeHandlers = new Hashtable();
-        private AsyncLogic _asyncLogic = new AsyncLogic();
+        private readonly AutoResetEvent _awaitHandsHake = new AutoResetEvent(false);
+        private readonly Hashtable _onInvokeHandlers = new Hashtable();
+        private readonly AsyncLogic _asyncLogic = new AsyncLogic();
         private Timer _sendHeartBeatTimer;
         private Timer _serverTimeoutTimer;
-        private HubConnectionOptions _hubConnectionOptions;
+        private readonly HubConnectionOptions _hubConnectionOptions;
 
         /// <summary>
         /// Indicates the state of the <see cref="HubConnection"/> to the server.
@@ -471,7 +471,7 @@ namespace nanoFramework.SignalR.Client
             }
         }
 
-        private bool SendMessageFromJsonString(string json)
+        private void SendMessageFromJsonString(string json)
         {
             if (_websocketClient.State == WebSocketState.Open)
             {
@@ -484,7 +484,7 @@ namespace nanoFramework.SignalR.Client
                     _sendHeartBeatTimer.Change((int)HandshakeTimeout.TotalMilliseconds, -1);
                 }
 
-                return true;
+                return;
             }
 
             throw new Exception("Can't send message WebsocketClient is not open");
