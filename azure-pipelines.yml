@@ -23,10 +23,10 @@ pool:
 
 variables:
   DOTNET_NOLOGO: true
-  solution: 'nanoframework.SignalR.Client.sln'
+  solution: 'nanoFramework.SignalR.Client.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  nugetPackageName: 'nanoframework.SignalR.Client'
+  nugetPackageName: 'nanoFramework.SignalR.Client'
 
 steps:
 
@@ -34,7 +34,7 @@ steps:
 # build steps only
 - template: azure-pipelines-templates/class-lib-build.yml@templates  
   parameters:
-    sonarCloudProject: 'nanoframework_nanoframework.SignalR.Client'
+    sonarCloudProject: 'nanoframework_nanoFramework.SignalR.Client'
 
 # step from template @ nf-tools repo
 # report error

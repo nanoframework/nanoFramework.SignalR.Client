@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>nanoframework.SignalR.Client</id>
+    <id>nanoFramework.SignalR.Client</id>
     <version>$version$</version>
-    <title>nanoframework.SignalR.Client</title>
+    <title>nanoFramework.SignalR.Client</title>
     <authors>nanoFramework project contributors</authors>
     <owners>nanoframework,dotnetfoundation</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -12,12 +12,12 @@
     </releaseNotes>
     <readme>docs\README.md</readme>
     <developmentDependency>false</developmentDependency>
-    <projectUrl>https://github.com/nanoframework/nanoframework.SignalR.Client</projectUrl>
+    <projectUrl>https://github.com/nanoframework/nanoFramework.SignalR.Client</projectUrl>
     <icon>images\nf-logo.png</icon>
-    <repository type="git" url="https://github.com/nanoframework/nanoframework.SignalR.Client" commit="$commit$" />
+    <repository type="git" url="https://github.com/nanoframework/nanoFramework.SignalR.Client" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the nanoframework.SignalR.Client assembly for nanoFramework C# projects.</description>
-    <tags>nanoFramework C# csharp netmf netnf nanoframework.SignalR.Client</tags>
+    <description>This package includes the nanoFramework.SignalR.Client assembly for nanoFramework C# projects.</description>
+    <tags>nanoFramework C# csharp netmf netnf nanoFramework.SignalR.Client</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.1" />
       <dependency id="nanoFramework.Json" version="2.1.2-preview.16" />
