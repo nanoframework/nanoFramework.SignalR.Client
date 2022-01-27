@@ -4,9 +4,8 @@ using System.Text;
 using System.Threading;
 using System.Net.WebSockets;
 using System.Net.WebSockets.WebSocketFrame;
-//using nanoFramework.SignalR.Client.json;
 using nanoFramework.Json;
-using System.Diagnostics;
+
 
 namespace nanoFramework.SignalR.Client
 {

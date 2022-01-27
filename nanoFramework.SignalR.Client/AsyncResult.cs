@@ -1,4 +1,4 @@
-﻿using nanoFramework.SignalR.Client.json;
+﻿using nanoFramework.Json;
 using System;
 using System.Text;
 using System.Threading;
@@ -92,7 +92,16 @@ namespace nanoFramework.SignalR.Client
         {
             if (contentValue != null)
             {
-                _value = JsonReflectionDecode.TryCastObjectType(contentValue, ReturnType);
+                string[] fullNames = ReturnType.FullName.Split('.');
+                if (fullNames.Length == 2 && fullNames[0] == "System")
+                {
+                    //base types can be cast directly
+                    _value = contentValue;
+                }
+                else
+                {
+                    _value = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(contentValue), ReturnType);
+                }
             }
             else
             {

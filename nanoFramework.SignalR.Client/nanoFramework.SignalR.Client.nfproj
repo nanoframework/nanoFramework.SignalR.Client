@@ -27,12 +27,6 @@
     <Compile Include="messages\InvocationBlockingSendMessage.cs" />
     <Compile Include="messages\InvocationReceiveMessage.cs" />
     <Compile Include="messages\InvocationSendMessage.cs" />
-    <Compile Include="Json\DateTimeExtensions.cs" />
-    <Compile Include="Json\JsonParser.cs" />
-    <Compile Include="Json\JsonReflectionDecode.cs" />
-    <Compile Include="Json\JsonSerializer.cs" />
-    <Compile Include="Json\NumberExtensions.cs" />
-    <Compile Include="Json\StringExtensions.cs" />
     <Compile Include="MessageType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HubConnectionOptions.cs" />
