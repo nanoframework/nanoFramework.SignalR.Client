@@ -301,7 +301,14 @@ namespace nanoFramework.SignalR.Client
                 }
             }
 
-            throw new Exception("unable to connect to SignalR server");
+            if (ReconnectEnabled && !reconnecting)
+            {
+                HardClose(true);
+            }
+            else
+            {
+                throw new Exception("unable to connect to SignalR server");
+            }
         }
 
         private void WebSocketClient_Closed(object sender, EventArgs e)
