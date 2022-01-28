@@ -139,11 +139,11 @@ namespace nanoFramework.SignalR.Client
             if (headers != null) CustomHeaders = headers;
             if (uri.ToLower().StartsWith("http://"))
             {
-                Uri = "ws" + uri.Remove(0, 4);
+                Uri = "ws" + uri.Substring(4, uri.Length - 4);
             }
             else if (uri.ToLower().StartsWith("https://"))
             {
-                Uri = "wss" + uri.Remove(0, 5);
+                Uri = "wss" + uri.Substring(5, uri.Length - 5);
             }
             else
             {
