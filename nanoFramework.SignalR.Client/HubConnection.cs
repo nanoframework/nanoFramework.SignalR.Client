@@ -407,7 +407,6 @@ namespace nanoFramework.SignalR.Client
 
                     foreach (string jsonMessage in stringMessages)
                     {
-                        Debug.WriteLine(jsonMessage);
                         var invocationMessage = (InvocationReceiveMessage)JsonConvert.DeserializeObject(jsonMessage, typeof(InvocationReceiveMessage));
                         switch (invocationMessage.type)
                         {
@@ -422,8 +421,7 @@ namespace nanoFramework.SignalR.Client
                                         object[] onInvokeArgs = new object[types.Length];
                                         for (int i = 0; i < types.Length; i++)
                                         {
-                                            object arg = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(invocationMessage.arguments[i]), types[i]);
-                                            invocationMessage.arguments[i] = arg;
+                                            onInvokeArgs[i] = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(invocationMessage.arguments[i]), types[i]);
                                         }
 
                                         handler?.Invoke(this, onInvokeArgs);
