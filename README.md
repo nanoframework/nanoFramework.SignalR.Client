@@ -28,6 +28,74 @@ Important: You must be connected to a network with a valid IP address. Please ch
 To establish a connection, create a `HubConnection` Client. You have to set the hub URL upon initialization of the HubConnection. You can also set custom headers by adding `ClientWebsocketHeaders` and set extra options by adding `HubConnectionOptions` upon initialization. The options are mainly used change settings of the underlying websocket and to set extra ssl options.
 You can start the connection by calling `Start`.
 
+```csharp
+using System;
+using System.Diagnostics;
+using System.Threading;
+using nanoFramework.SignalR.Client;
+
+namespace NFSignalrTestClient
+{
+    public class Program
+    {
+        public static void Main()
+        {
+            //setup connection
+            var options = new HubConnectionOptions() { Reconnect = true };
+            HubConnection hubConnection = new HubConnection("http://192.168.179.2:5001/testhub", options: options);
+            
+            hubConnection.Closed += HubConnection_Closed;
+
+            hubConnection.On("ReceiveMessage", new Type[] { typeof(string), typeof(string) }, (sender, args) =>
+            {
+                var name = (string)args[0];
+                var message = (string)args[1];
+
+                Console.WriteLine($"{name} : {message}");
+            });
+            
+            //start connection
+            hubConnection.Start();
+                     
+
+            AsyncResult dashboardClientConnected = hubConnection.InvokeCoreAsync("AwaitCientConnected", typeof(bool), new object[] { }, -1);
+
+            int seconds = 0;
+
+            while (!dashboardClientConnected.Completed)
+            {
+                Debug.WriteLine($"Waited {seconds} for client to open webapp");
+                seconds++;
+                Thread.Sleep(1000);
+            }
+
+            if ((bool)dashboardClientConnected.Value)
+            {
+                hubConnection.SendCore("ReportStatus", new object[] { "Client Connected" });
+
+                int count = 0;
+                while (hubConnection.State == HubConnectionState.Connected)
+                {
+                    hubConnection.InvokeCore("SendMessage", null, new object[] { count, "this is a control message" });
+                    count++;
+                    Thread.Sleep(1000);
+                }
+            }
+            else
+            {
+                hubConnection.Stop("client failed to connect");
+            }
+        }
+
+        private static void HubConnection_Closed(object sender, SignalrEventMessageArgs message)
+        {
+            Debug.WriteLine($"closed received with message: {message.Message}");
+        }
+    }
+}
+```
+
+
 ##### Handle lost connections
 Reconnecting
 By default the `HubConnection` Client will not reconnect if a connection is lost or fails upon first connection. By setting the HubConnectionOptions `Reconnect` to true upon initialization of the HubConnection, the client will try to reconnect with a interval of 0, 2, 10, and 30 seconds, stopping after four failed attempts. 
