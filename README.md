@@ -15,6 +15,72 @@ This API mirrors (as close as possible) the official .NET [Microsoft.AspNet.Sign
 | nanoFramework.SignalR.Client | [![Build Status](https://dev.azure.com/nanoframework/nanoFramework.SignalR.Client/_apis/build/status/nanoframework.nanoFramework.SignalR.Client?branchName=main)](https://dev.azure.com/nanoframework/nanoFramework.SignalR.Client/_build/latest?definitionId=91&branchName=main) | [![NuGet](https://img.shields.io/nuget/v/nanoFramework.SignalR.Client.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.SignalR.Client/) |
 | nanoFramework.SignalR.Client (preview) | [![Build Status](https://dev.azure.com/nanoframework/nanoFramework.SignalR.Client/_apis/build/status/nanoframework.nanoFramework.SignalR.Client?branchName=develop)](https://dev.azure.com/nanoframework/nanoFramework.SignalR.Client/_build/latest?definitionId=91&branchName=develop) | [![NuGet](https://img.shields.io/nuget/vpre/nanoFramework.SignalR.Client.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.SignalR.Client/) |
 
+## Description
+
+This is a SignalR Client library that enable you to connect your .net nanoFramework device to a Signalr Hub.  SignalR is part of the ASP.NET Framework that makes it easy to create web applications that require high-frequency updates from the server like gaming. In the IoT domain Signalr can be used to create a webapp that for example shows a life graphs of connected smart meters, control a robot arm and many more.
+
+## Usage
+
+Important: You must be connected to a network with a valid IP address. Please check the examples with the Network Helpers on how to set this up.
+
+### Connect to a hub
+
+To establish a connection, create a `HubConnection` Client. You have to set the hub URL upon initialization of the HubConnection. You can also set custom headers by adding `ClientWebsocketHeaders` and set extra options by adding `HubConnectionOptions` upon initialization. The options are mainly used change settings of the underlying websocket and to set extra ssl options.
+You can start the connection by calling `Start`.
+
+##### Handle lost connections
+Reconnecting
+By default the `HubConnection` Client will not reconnect if a connection is lost or fails upon first connection. By setting the HubConnectionOptions `Reconnect` to true upon initialization of the HubConnection, the client will try to reconnect with a interval of 0, 2, 10, and 30 seconds, stopping after four failed attempts. 
+When the client tries to reconnect the Reconnecting event is fired.
+
+Note: the client will only try to reconnect if the connection is closed after receiving a server close message with the server request to reconnect. 
+
+##### Connection State
+
+The connection state can be monitored by checking the HubConnection `State`. The different states are: `Disconnected` `Connected` `Connecting` and `Reconnecting`. After a connection is established every state change will fire a event: `Closed` `Reconnecting` or `Reconnected`. These events can be used to manual handle disconnects and reconnection.   
+ 
+### Call Hub methods from Client
+
+There are three ways to call a method on the hub. All three methods require you to pass the hub method name and any arguments defined in the hub method. 
+
+The simples form is calling `SendCore` This will call the method without expecting or waiting for any response from the server. It’s a ‘fire and forget’ method. 
+
+The second method is `InvokeCore`. InvokeCore requires you to pass the hub method name, the hub method return type, the arguments and an optional timeout in milliseconds. If no timeout is given the default `ServerTimeout` is used. This is a Synchronous method that will wait until the server replies. The returned object is of the type defined by the method return type argument. The casting of the object to the right type should be done manually.
+Note: if the hub method return type is void, the return type upon calling InvokeCore or InvokeCoreAsync should be null.
+
+Note: set timeout to -1 to disable the server timeout. If no return message is received from the server this will wait indefinitely.   
+
+The third method is `InvokeCoreAsync`. This is the same as InvokeCore but than asynchronous. It will return an AsyncResult. 
+
+##### AsyncResult
+
+The `AsyncResult` monitors the return message of the hub method. Upon completion `Completed` will be true. Upon completion the `Value` will hold the return object that needs to be cast to the right Type manually. Calling `Value` before completion will result in the awaiting of the server return. If an error occurs, `Error` will be true and the error message will be inside `ErrorMessage`.
+
+### Call clients methods from hub
+Define methods the hub calls using connection.On after building, but before starting the connection.
+
+```csharp
+connection.On<string, string>("ReceiveMessage", (sender, args) =>
+{
+    var name = args[0] as string;
+    var message = args[1] as string;
+
+    Debug.WriteLine($"{name} : {message}");
+});
+```
+
+The preceding code in connection.On runs when server-side code calls it using the SendAsync method.
+C#Copy
+public async Task SendMessage(string user, string message)
+{
+    await Clients.All.SendAsync("ReceiveMessage", user, message);
+}
+
+### Stopping the connection
+
+The connection can be closed by calling `Stop`. This will stop the connection. If you want to stop the connection because for example a device sensor malfunctions, an error can be conveyed back to the server by stating the error using the optional `errorMessage`.  
+
+
 ## Feedback and documentation
 
 For documentation, providing feedback, issues and finding out how to contribute please refer to the [Home repo](https://github.com/nanoframework/Home).
