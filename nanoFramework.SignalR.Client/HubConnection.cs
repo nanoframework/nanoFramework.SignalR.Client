@@ -130,7 +130,7 @@ namespace nanoFramework.SignalR.Client
         /// <summary>
         /// Initializes a new instance of the <see cref="HubConnection"/> class.
         /// </summary>
-        /// <param name="uri">The web location of the SignalR Hub server.</param>
+        /// <param name="uri">Fully Qualified Domain Name of the SignalR Hub server.</param>
         /// <param name="headers">Optional <see cref="ClientWebSocketHeaders"/> for setting custom headers.</param>
         /// <param name="options">Optional <see cref="HubConnectionOptions"/> where extra options can be defined.</param>
         public HubConnection(string uri, ClientWebSocketHeaders headers = null, HubConnectionOptions options = null) //reconnect enables the client to reconnect if the Signalr server closes with a reconenct request. 
