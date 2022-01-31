@@ -137,7 +137,11 @@ namespace nanoFramework.SignalR.Client
         {
             _hubConnectionOptions = options;
             State = HubConnectionState.Disconnected;
-            if (headers != null) CustomHeaders = headers;
+            if (headers != null)
+            {
+                CustomHeaders = headers;
+            }
+
             if (uri.ToLower().StartsWith("http://"))
             {
                 Uri = "ws" + uri.Substring(4, uri.Length - 4);
