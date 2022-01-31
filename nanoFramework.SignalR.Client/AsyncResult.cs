@@ -96,7 +96,6 @@ namespace nanoFramework.SignalR.Client
         {
             if (contentValue != null)
             {
-                string[] fullNames = ReturnType.FullName.Split('.');
                 _value = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(contentValue), ReturnType);
             }
             else
