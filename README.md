@@ -23,7 +23,7 @@ Important: You must be connected to a network with a valid IP address. Please ch
 
 ### Connect to a hub
 
-To establish a connection, create a `HubConnection` Client. You have to set the hub URL upon initialization of the HubConnection. You can also set custom headers by adding `ClientWebsocketHeaders` and set extra options by adding `HubConnectionOptions` upon initialization. The options are mainly used change settings of the underlying websocket and to set extra ssl options.
+To establish a connection, create a `HubConnection` Client. You have to set the hub URL upon initialization of the HubConnection. You can also set custom headers by adding `ClientWebsocketHeaders` and set extra options by adding `HubConnectionOptions` upon initialization. The options are mainly used to change the settings of the underlying websocket and to set extra ssl options.
 You can start the connection by calling `Start`.
 
 ```csharp
