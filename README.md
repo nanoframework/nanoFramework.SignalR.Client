@@ -15,11 +15,9 @@ This API mirrors (as close as possible) the official .NET [Microsoft.AspNet.Sign
 | nanoFramework.SignalR.Client | [![Build Status](https://dev.azure.com/nanoframework/nanoFramework.SignalR.Client/_apis/build/status/nanoframework.nanoFramework.SignalR.Client?branchName=main)](https://dev.azure.com/nanoframework/nanoFramework.SignalR.Client/_build/latest?definitionId=91&branchName=main) | [![NuGet](https://img.shields.io/nuget/v/nanoFramework.SignalR.Client.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.SignalR.Client/) |
 | nanoFramework.SignalR.Client (preview) | [![Build Status](https://dev.azure.com/nanoframework/nanoFramework.SignalR.Client/_apis/build/status/nanoframework.nanoFramework.SignalR.Client?branchName=develop)](https://dev.azure.com/nanoframework/nanoFramework.SignalR.Client/_build/latest?definitionId=91&branchName=develop) | [![NuGet](https://img.shields.io/nuget/vpre/nanoFramework.SignalR.Client.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.SignalR.Client/) |
 
-## Description
+# Usage
 
 This is a SignalR Client library that enable you to connect your .net nanoFramework device to a Signalr Hub.  SignalR is part of the ASP.NET Framework that makes it easy to create web applications that require high-frequency updates from the server like gaming. In the IoT domain Signalr can be used to create a webapp that for example shows a life graphs of connected smart meters, control a robot arm and many more.
-
-## Usage
 
 Important: You must be connected to a network with a valid IP address. Please check the examples with the Network Helpers on how to set this up.
 
@@ -95,8 +93,8 @@ namespace NFSignalrTestClient
 }
 ```
 
-
 ##### Handle lost connections
+
 Reconnecting
 By default the `HubConnection` Client will not reconnect if a connection is lost or fails upon first connection. By setting the HubConnectionOptions `Reconnect` to true upon initialization of the HubConnection, the client will try to reconnect with a interval of 0, 2, 10, and 30 seconds, stopping after four failed attempts. 
 When the client tries to reconnect the Reconnecting event is fired.
@@ -124,7 +122,26 @@ The third method is `InvokeCoreAsync`. This is the same as InvokeCore but than a
 
 The `AsyncResult` monitors the return message of the hub method. Upon completion `Completed` will be true. Upon completion the `Value` will hold the return object that needs to be cast to the right Type manually. Calling `Value` before completion will result in the awaiting of the server return. If an error occurs, `Error` will be true and the error message will be inside `ErrorMessage`.
 
+```
+AsyncResult dashboardClientConnected = hubConnection.InvokeCoreAsync("AwaitCientConnected", typeof(bool), new object[] { }, -1);
+
+int seconds = 0;
+
+while (!dashboardClientConnected.Completed)
+{
+    Debug.WriteLine($"Waited {seconds} for client to open webapp");
+    seconds++;
+    Thread.Sleep(1000);
+}
+
+if ((bool)dashboardClientConnected.Value)
+{
+    Debug.WriteLine("The client connected to the dashboard, start sending live data");
+}
+```
+
 ### Call clients methods from hub
+
 Define methods the hub calls using connection.On after building, but before starting the connection.
 
 ```csharp
@@ -138,16 +155,17 @@ connection.On<string, string>("ReceiveMessage", (sender, args) =>
 ```
 
 The preceding code in connection.On runs when server-side code calls it using the SendAsync method.
-C#Copy
+
+```csharp
 public async Task SendMessage(string user, string message)
 {
     await Clients.All.SendAsync("ReceiveMessage", user, message);
 }
+```
 
 ### Stopping the connection
 
 The connection can be closed by calling `Stop`. This will stop the connection. If you want to stop the connection because for example a device sensor malfunctions, an error can be conveyed back to the server by stating the error using the optional `errorMessage`.  
-
 
 ## Feedback and documentation
 
