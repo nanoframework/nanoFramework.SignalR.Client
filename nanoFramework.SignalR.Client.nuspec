@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>nanoFramework.SignalR.Client</id>
@@ -31,11 +31,11 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="WebSockets\bin\Release\SignalR.Client.dll" target="lib\SignalR.Client.dll" />
-    <file src="WebSockets\bin\Release\SignalR.Client.pdb" target="lib\SignalR.Client.pdb" />
-    <file src="WebSockets\bin\Release\SignalR.Client.pdbx" target="lib\SignalR.Client.pdbx" />
-    <file src="WebSockets\bin\Release\SignalR.Client.pe" target="lib\SignalR.Client.pe" />
-    <file src="WebSockets\bin\Release\SignalR.Client.xml" target="lib\SignalR.Client.xml" />
+    <file src="nanoFramework.SignalR.Client\bin\Release\nanoFramework.SignalR.Client.dll" target="lib\nanoFramework.SignalR.Client.dll" />
+    <file src="nanoFramework.SignalR.Client\bin\Release\nanoFramework.SignalR.Client.pdb" target="lib\nanoFramework.SignalR.Client.pdb" />
+    <file src="nanoFramework.SignalR.Client\bin\Release\nanoFramework.SignalR.Client.pdbx" target="lib\nanoFramework.SignalR.Client.pdbx" />
+    <file src="nanoFramework.SignalR.Client\bin\Release\nanoFramework.SignalR.Client.pe" target="lib\nanoFramework.SignalR.Client.pe" />
+    <file src="nanoFramework.SignalR.Client\bin\Release\nanoFramework.SignalR.Client.xml" target="lib\nanoFramework.SignalR.Client.xml" />
     <file src="assets\readme.txt" target="" />
     <file src="README.md" target="docs\" />
     <file src="assets\nf-logo.png" target="images\" />
