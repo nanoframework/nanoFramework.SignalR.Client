@@ -8,6 +8,7 @@ using System.Threading;
 using System.Net.WebSockets;
 using System.Net.WebSockets.WebSocketFrame;
 using nanoFramework.Json;
+using System.Diagnostics;
 
 namespace nanoFramework.SignalR.Client
 {
@@ -129,15 +130,30 @@ namespace nanoFramework.SignalR.Client
         /// <summary>
         /// Initializes a new instance of the <see cref="HubConnection"/> class.
         /// </summary>
-        /// <param name="uri">The websocket location of the SignalR Hub server. Websockets prefix are ws:// or wss://.</param>
+        /// <param name="uri">Fully Qualified Domain Name of the SignalR Hub server.</param>
         /// <param name="headers">Optional <see cref="ClientWebSocketHeaders"/> for setting custom headers.</param>
         /// <param name="options">Optional <see cref="HubConnectionOptions"/> where extra options can be defined.</param>
-        public HubConnection(string uri, ClientWebSocketHeaders headers = null, HubConnectionOptions options = null) //reconnect enabels the client to reconnect if the Signalr server closes with a reconenct request. 
+        public HubConnection(string uri, ClientWebSocketHeaders headers = null, HubConnectionOptions options = null) //reconnect enables the client to reconnect if the Signalr server closes with a reconenct request. 
         {
             _hubConnectionOptions = options;
-            Uri = uri;
             State = HubConnectionState.Disconnected;
-            if (headers != null) CustomHeaders = headers;
+            if (headers != null)
+            {
+                CustomHeaders = headers;
+            }
+
+            if (uri.ToLower().StartsWith("http://"))
+            {
+                Uri = "ws" + uri.Substring(4, uri.Length - 4);
+            }
+            else if (uri.ToLower().StartsWith("https://"))
+            {
+                Uri = "wss" + uri.Substring(5, uri.Length - 5);
+            }
+            else
+            {
+                Uri = uri;
+            }
         }
 
         /// <summary>
@@ -289,7 +305,14 @@ namespace nanoFramework.SignalR.Client
                 }
             }
 
-            throw new Exception("unable to connect to SignalR server");
+            if (ReconnectEnabled && !reconnecting)
+            {
+                HardClose(true);
+            }
+            else
+            {
+                throw new Exception("unable to connect to SignalR server");
+            }
         }
 
         private void WebSocketClient_Closed(object sender, EventArgs e)
@@ -369,7 +392,7 @@ namespace nanoFramework.SignalR.Client
                 {
                     if (e.Frame.Buffer.Length > 3)
                     {
-                        var errorMessage = JsonConvert.DeserializeObject(Encoding.UTF8.GetString(e.Frame.Buffer, 0, e.Frame.Buffer.Length - 1), typeof(JsonHubHandshakeError)) as JsonHubHandshakeError;
+                        var errorMessage = (JsonHubHandshakeError)JsonConvert.DeserializeObject(Encoding.UTF8.GetString(e.Frame.Buffer, 0, e.Frame.Buffer.Length - 1), typeof(JsonHubHandshakeError));
                         if (errorMessage.error != null)
                         {
                             State = HubConnectionState.Disconnected;
@@ -388,7 +411,7 @@ namespace nanoFramework.SignalR.Client
 
                     foreach (string jsonMessage in stringMessages)
                     {
-                        var invocationMessage = JsonConvert.DeserializeObject(jsonMessage, typeof(InvocationReceiveMessage)) as InvocationReceiveMessage;
+                        var invocationMessage = (InvocationReceiveMessage)JsonConvert.DeserializeObject(jsonMessage, typeof(InvocationReceiveMessage));
                         switch (invocationMessage.type)
                         {
                             case MessageType.Invocation:
@@ -402,16 +425,7 @@ namespace nanoFramework.SignalR.Client
                                         object[] onInvokeArgs = new object[types.Length];
                                         for (int i = 0; i < types.Length; i++)
                                         {
-                                            string[] fullNames = types[i].FullName.Split('.');
-                                            if (fullNames.Length == 2 && fullNames[0] == "System")
-                                            {
-                                                // base types can be cast directly
-                                                onInvokeArgs[i] = invocationMessage.arguments[i];
-                                            }
-                                            else
-                                            {
-                                                onInvokeArgs[i] = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(invocationMessage.arguments[i]), types[i]);
-                                            }
+                                            onInvokeArgs[i] = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(invocationMessage.arguments[i]), types[i]);
                                         }
 
                                         handler?.Invoke(this, onInvokeArgs);

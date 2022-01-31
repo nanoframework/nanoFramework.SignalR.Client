@@ -96,24 +96,15 @@ namespace nanoFramework.SignalR.Client
         {
             if (contentValue != null)
             {
-                string[] fullNames = ReturnType.FullName.Split('.');
-                if (fullNames.Length == 2 && fullNames[0] == "System")
-                {
-                    //base types can be cast directly
-                    _value = contentValue;
-                }
-                else
-                {
-                    _value = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(contentValue), ReturnType);
-                }
+                _value = JsonConvert.DeserializeObject(JsonConvert.SerializeObject(contentValue), ReturnType);
             }
             else
             {
                 _value = null;
             }
-            Completed = true;
             _completionTimeoutTimer.Dispose();
             _asyncResult.Set();
+            Completed = true;
             _asyncLogic.RemoveAsyncResult(InvocationId);
         }
     }
