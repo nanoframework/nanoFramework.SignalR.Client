@@ -17,7 +17,7 @@ This API mirrors (as close as possible) the official .NET [Microsoft.AspNet.Sign
 
 # Usage
 
-This is a SignalR Client library that enable you to connect your .net nanoFramework device to a Signalr Hub.  SignalR is part of the ASP.NET Framework that makes it easy to create web applications that require high-frequency updates from the server like gaming. In the IoT domain Signalr can be used to create a webapp that for example shows a life graphs of connected smart meters, control a robot arm and many more.
+This is a SignalR Client library that enable you to connect your .net nanoFramework device to a SignalR Hub.  SignalR is part of the ASP.NET Framework that makes it easy to create web applications that require high-frequency updates from the server like gaming. In the IoT domain SignalR can be used to create a webapp that for example shows a life graphs of connected smart meters, control a robot arm and many more.
 
 Important: You must be connected to a network with a valid IP address. Please check the examples with the Network Helpers on how to set this up.
 
