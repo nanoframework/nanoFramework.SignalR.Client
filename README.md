@@ -101,7 +101,7 @@ Reconnecting
 By default the `HubConnection` Client will not reconnect if a connection is lost or fails upon first connection. By setting the HubConnectionOptions `Reconnect` to true upon initialization of the HubConnection, the client will try to reconnect with a interval of 0, 2, 10, and 30 seconds, stopping after four failed attempts. 
 When the client tries to reconnect the Reconnecting event is fired.
 
-Note: the client will only try to reconnect if the connection is closed after receiving a server close message with the server request to reconnect. 
+> Note: the client will only try to reconnect if the connection is closed after receiving a server close message with the server request to reconnect. 
 
 ##### Connection State
 
@@ -111,7 +111,7 @@ The connection state can be monitored by checking the HubConnection `State`. The
 
 There are three ways to call a method on the hub. All three methods require you to pass the hub method name and any arguments defined in the hub method. 
 
-The simples form is calling `SendCore` This will call the method without expecting or waiting for any response from the server. It’s a ‘fire and forget’ method. 
+The simples form is calling `SendCore` This will call the method without expecting or waiting for any response from the server. Itâ€™s a â€˜fire and forgetâ€™ method. 
 
 The second method is `InvokeCore`. InvokeCore requires you to pass the hub method name, the hub method return type, the arguments and an optional timeout in milliseconds. If no timeout is given the default `ServerTimeout` is used. This is a Synchronous method that will wait until the server replies. The returned object is of the type defined by the method return type argument. The casting of the object to the right type should be done manually.
 Note: if the hub method return type is void, the return type upon calling InvokeCore or InvokeCoreAsync should be null.
