@@ -40,7 +40,7 @@ namespace NFSignalrTestClient
         {
             //setup connection
             var options = new HubConnectionOptions() { Reconnect = true };
-            HubConnection hubConnection = new HubConnection("http://192.168.179.2:5001/testhub", options: options);
+            HubConnection hubConnection = new HubConnection("http://YourSignalrTestServer/testhub", options: options);
             
             hubConnection.Closed += HubConnection_Closed;
 
@@ -122,7 +122,7 @@ The third method is `InvokeCoreAsync`. This is the same as InvokeCore but than a
 
 The `AsyncResult` monitors the return message of the hub method. Upon completion `Completed` will be true. Upon completion the `Value` will hold the return object that needs to be cast to the right Type manually. Calling `Value` before completion will result in the awaiting of the server return. If an error occurs, `Error` will be true and the error message will be inside `ErrorMessage`.
 
-```
+```csharp
 AsyncResult dashboardClientConnected = hubConnection.InvokeCoreAsync("AwaitCientConnected", typeof(bool), new object[] { }, -1);
 
 int seconds = 0;
