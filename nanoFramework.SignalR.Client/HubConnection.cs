@@ -548,8 +548,9 @@ namespace nanoFramework.SignalR.Client
                         _asyncLogic.CloseAllAsyncResults();
                     }
                 }
-
+                State = HubConnectionState.Disconnected;
                 Closed?.Invoke(this, new SignalrEventMessageArgs() { Message = $"Reconnect failed with message: {errorMesage}" });
+
             }
             else
             {
