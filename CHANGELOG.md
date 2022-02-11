@@ -2,7 +2,15 @@
 
 ## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/nanoFramework.SignalR.Client/tree/HEAD)
 
-[Full Changelog](https://github.com/nanoframework/nanoFramework.SignalR.Client/compare/v1.0.0-preview.40...HEAD)
+[Full Changelog](https://github.com/nanoframework/nanoFramework.SignalR.Client/compare/v1.0.0-preview.42...HEAD)
+
+**Implemented enhancements:**
+
+- Fix State after a failed reconnect or connect  [\#15](https://github.com/nanoframework/nanoFramework.SignalR.Client/pull/15)
+
+## [v1.0.0-preview.42](https://github.com/nanoframework/nanoFramework.SignalR.Client/tree/v1.0.0-preview.42) (2022-02-09)
+
+[Full Changelog](https://github.com/nanoframework/nanoFramework.SignalR.Client/compare/v1.0.0-preview.40...v1.0.0-preview.42)
 
 **Documentation and other chores:**
 
