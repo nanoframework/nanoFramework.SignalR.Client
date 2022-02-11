@@ -311,6 +311,7 @@ namespace nanoFramework.SignalR.Client
             }
             else
             {
+                State = HubConnectionState.Disconnected;
                 throw new Exception("unable to connect to SignalR server");
             }
         }
@@ -548,8 +549,9 @@ namespace nanoFramework.SignalR.Client
                         _asyncLogic.CloseAllAsyncResults();
                     }
                 }
-
+                State = HubConnectionState.Disconnected;
                 Closed?.Invoke(this, new SignalrEventMessageArgs() { Message = $"Reconnect failed with message: {errorMesage}" });
+
             }
             else
             {
