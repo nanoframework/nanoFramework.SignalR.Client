@@ -286,8 +286,15 @@ namespace nanoFramework.SignalR.Client
             _websocketClient = new ClientWebSocket();
             _websocketClient.MessageReceived += WebsocketClient_MessageReceived;
             _websocketClient.ConnectionClosed += WebSocketClient_Closed;
-            _websocketClient.Connect(Uri, CustomHeaders);
-
+            string websocketException = string.Empty;
+            try
+            {
+                _websocketClient.Connect(Uri, CustomHeaders);
+            }
+            catch(Exception ex)
+            {
+                websocketException = ex.Message;
+            }
             if (_websocketClient.State == WebSocketState.Open)
             {
                 SendMessageFromJsonString(handshakeJson);
@@ -312,7 +319,14 @@ namespace nanoFramework.SignalR.Client
             else
             {
                 State = HubConnectionState.Disconnected;
-                throw new Exception("unable to connect to SignalR server");
+                if (string.IsNullOrEmpty(websocketException))
+                {
+                    throw new Exception("unable to connect to SignalR server");
+                }
+                else
+                {
+                    throw new Exception($"unable to connect to SignalR server, websocket connection failed with message: {websocketException}");
+                }
             }
         }
 
