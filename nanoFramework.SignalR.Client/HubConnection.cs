@@ -311,6 +311,7 @@ namespace nanoFramework.SignalR.Client
             }
             else
             {
+                State = HubConnectionState.Disconnected;
                 throw new Exception("unable to connect to SignalR server");
             }
         }
