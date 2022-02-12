@@ -321,11 +321,11 @@ namespace nanoFramework.SignalR.Client
                 State = HubConnectionState.Disconnected;
                 if (string.IsNullOrEmpty(websocketException))
                 {
-                    throw new Exception("unable to connect to SignalR server");
+                    throw new Exception("Unable to connect");
                 }
                 else
                 {
-                    throw new Exception($"unable to connect to SignalR server, websocket connection failed with message: {websocketException}");
+                    throw new Exception($"Unable to connect, Websocket error");
                 }
             }
         }
