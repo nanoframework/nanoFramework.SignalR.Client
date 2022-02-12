@@ -177,8 +177,8 @@ namespace nanoFramework.SignalR.Client
                 }
 
                 State = HubConnectionState.Disconnected;
-                Closed?.Invoke(this, new SignalrEventMessageArgs() { Message = "Closed by client" });
                 HardClose();
+                Closed?.Invoke(this, new SignalrEventMessageArgs() { Message = "Closed by client" });
             }
         }
 
@@ -332,8 +332,8 @@ namespace nanoFramework.SignalR.Client
 
         private void WebSocketClient_Closed(object sender, EventArgs e)
         {
-            Closed?.Invoke(this, new SignalrEventMessageArgs() { Message = "Underlying WebSocketClient closed" });
             HardClose();
+            Closed?.Invoke(this, new SignalrEventMessageArgs() { Message = "Underlying WebSocketClient closed" });
         }
 
         private void ServerTimeoutEvent(object state)
@@ -478,8 +478,8 @@ namespace nanoFramework.SignalR.Client
                                 }
                                 else
                                 {
-                                    Closed?.Invoke(this, new SignalrEventMessageArgs() { Message = errorMessage });
                                     HardClose();
+                                    Closed?.Invoke(this, new SignalrEventMessageArgs() { Message = errorMessage });
                                 }
 
                                 break;
