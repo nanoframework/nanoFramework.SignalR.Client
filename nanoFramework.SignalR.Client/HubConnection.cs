@@ -177,8 +177,8 @@ namespace nanoFramework.SignalR.Client
                 }
 
                 State = HubConnectionState.Disconnected;
-                Closed?.Invoke(this, new SignalrEventMessageArgs() { Message = "Closed by client" });
                 HardClose();
+                Closed?.Invoke(this, new SignalrEventMessageArgs() { Message = "Closed by client" });
             }
         }
 
@@ -286,9 +286,16 @@ namespace nanoFramework.SignalR.Client
             _websocketClient = new ClientWebSocket();
             _websocketClient.MessageReceived += WebsocketClient_MessageReceived;
             _websocketClient.ConnectionClosed += WebSocketClient_Closed;
-            _websocketClient.Connect(Uri, CustomHeaders);
-
-            if (_websocketClient.State == WebSocketState.Open)
+            string websocketException = string.Empty;
+            try
+            {
+                _websocketClient.Connect(Uri, CustomHeaders);
+            }
+            catch(Exception ex)
+            {
+                websocketException = ex.Message;
+            }
+            if (_websocketClient.State == WebSocketState.Open && string.IsNullOrEmpty(websocketException))
             {
                 SendMessageFromJsonString(handshakeJson);
 
@@ -312,19 +319,30 @@ namespace nanoFramework.SignalR.Client
             else
             {
                 State = HubConnectionState.Disconnected;
-                throw new Exception("unable to connect to SignalR server");
+                if (string.IsNullOrEmpty(websocketException))
+                {
+                    throw new Exception("Unable to connect");
+                }
+                else
+                {
+                    throw new Exception($"Unable to connect, Websocket error");
+                }
             }
         }
 
         private void WebSocketClient_Closed(object sender, EventArgs e)
         {
-            Closed?.Invoke(this, new SignalrEventMessageArgs() { Message = "Underlying WebSocketClient closed" });
             HardClose();
+            Closed?.Invoke(this, new SignalrEventMessageArgs() { Message = "Underlying WebSocketClient closed" });
         }
 
         private void ServerTimeoutEvent(object state)
         {
-            throw new Exception("server timed out");
+            if (State == HubConnectionState.Connected)
+            {
+                HardClose();
+                Closed?.Invoke(this, new SignalrEventMessageArgs() { Message = "server timed out" });
+            }
         }
 
         private void SendHeartBeatEvent(object state)
@@ -464,8 +482,8 @@ namespace nanoFramework.SignalR.Client
                                 }
                                 else
                                 {
-                                    Closed?.Invoke(this, new SignalrEventMessageArgs() { Message = errorMessage });
                                     HardClose();
+                                    Closed?.Invoke(this, new SignalrEventMessageArgs() { Message = errorMessage });
                                 }
 
                                 break;
