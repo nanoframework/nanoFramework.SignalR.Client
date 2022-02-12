@@ -338,7 +338,11 @@ namespace nanoFramework.SignalR.Client
 
         private void ServerTimeoutEvent(object state)
         {
-            throw new Exception("server timed out");
+            if (State == HubConnectionState.Connected)
+            {
+                HardClose();
+                Closed?.Invoke(this, new SignalrEventMessageArgs() { Message = "server timed out" });
+            }
         }
 
         private void SendHeartBeatEvent(object state)
