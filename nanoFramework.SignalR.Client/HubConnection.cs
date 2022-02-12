@@ -295,7 +295,7 @@ namespace nanoFramework.SignalR.Client
             {
                 websocketException = ex.Message;
             }
-            if (_websocketClient.State == WebSocketState.Open)
+            if (_websocketClient.State == WebSocketState.Open && string.IsNullOrEmpty(websocketException))
             {
                 SendMessageFromJsonString(handshakeJson);
 
