@@ -2,7 +2,15 @@
 
 ## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/nanoFramework.SignalR.Client/tree/HEAD)
 
-[Full Changelog](https://github.com/nanoframework/nanoFramework.SignalR.Client/compare/v1.0.0-preview.42...HEAD)
+[Full Changelog](https://github.com/nanoframework/nanoFramework.SignalR.Client/compare/v1.0.0-preview.44...HEAD)
+
+**Fixed bugs:**
+
+- Websocket Connect added try catch [\#16](https://github.com/nanoframework/nanoFramework.SignalR.Client/pull/16)
+
+## [v1.0.0-preview.44](https://github.com/nanoframework/nanoFramework.SignalR.Client/tree/v1.0.0-preview.44) (2022-02-11)
+
+[Full Changelog](https://github.com/nanoframework/nanoFramework.SignalR.Client/compare/v1.0.0-preview.42...v1.0.0-preview.44)
 
 **Implemented enhancements:**
 
