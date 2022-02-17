@@ -1,18 +1,25 @@
+# Copyright (c) .NET Foundation and Contributors
+# See LICENSE file in the project root for full license information.
+
 trigger:
   branches:
-    include: 
+    include:
       - main
       - develop
       - release-*
   paths:
     exclude:
-      - README.md
+      - .github_changelog_generator
+      - .gitignore
       - CHANGELOG.md
       - CODE_OF_CONDUCT.md
       - LICENSE.md
+      - README.md
       - NuGet.Config
-      - .github_changelog_generator
-      - .gitignore
+      - assets/*
+      - config/*
+      - .github/*
+
   tags:
     include: 
       - v*

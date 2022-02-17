@@ -4,8 +4,7 @@
     <id>nanoFramework.SignalR.Client</id>
     <version>$version$</version>
     <title>nanoFramework.SignalR.Client</title>
-    <authors>nanoFramework project contributors</authors>
-    <owners>nanoframework,dotnetfoundation</owners>
+    <authors>nanoframework</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
     <releaseNotes>
@@ -16,8 +15,8 @@
     <icon>images\nf-logo.png</icon>
     <repository type="git" url="https://github.com/nanoframework/nanoFramework.SignalR.Client" commit="$commit$" />
     <copyright>Copyright (c) .NET Foundation and Contributors</copyright>
-    <description>This package includes the nanoFramework.SignalR.Client assembly for nanoFramework C# projects.</description>
-    <tags>nanoFramework C# csharp netmf netnf nanoFramework.SignalR.Client</tags>
+    <description>This package includes the nanoFramework.SignalR.Client assembly for .NET nanoFramework C# projects.</description>
+    <tags>nanoFramework C# csharp netmf netnf SignalR</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.12.0-preview.5" />
       <dependency id="nanoFramework.Json" version="2.1.2-preview.42" />
