@@ -2,7 +2,15 @@
 
 ## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/nanoFramework.SignalR.Client/tree/HEAD)
 
-[Full Changelog](https://github.com/nanoframework/nanoFramework.SignalR.Client/compare/v1.0.0-preview.69...HEAD)
+[Full Changelog](https://github.com/nanoframework/nanoFramework.SignalR.Client/compare/v1.0.0-preview.71...HEAD)
+
+**Documentation and other chores:**
+
+- Update 1 NuGet dependencies [\#29](https://github.com/nanoframework/nanoFramework.SignalR.Client/pull/29)
+
+## [v1.0.0-preview.71](https://github.com/nanoframework/nanoFramework.SignalR.Client/tree/v1.0.0-preview.71) (2022-03-09)
+
+[Full Changelog](https://github.com/nanoframework/nanoFramework.SignalR.Client/compare/v1.0.0-preview.69...v1.0.0-preview.71)
 
 **Documentation and other chores:**
 
