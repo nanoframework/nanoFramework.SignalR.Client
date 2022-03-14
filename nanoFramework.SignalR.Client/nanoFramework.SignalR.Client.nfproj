@@ -48,7 +48,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.Json, Version=2.1.2.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.Json.2.1.2-preview.54\lib\nanoFramework.Json.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.Json.2.1.2-preview.56\lib\nanoFramework.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events, Version=1.10.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
@@ -64,15 +64,15 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.IO.Streams, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.IO.Streams.1.0.0-preview.12\lib\System.IO.Streams.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.IO.Streams.1.0.0-preview.15\lib\System.IO.Streams.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Net, Version=1.8.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Net.1.8.0-preview.32\lib\System.Net.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Net.1.8.0-preview.35\lib\System.Net.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.WebSockets, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Net.WebSockets.Client.1.0.0-preview.87\lib\System.Net.WebSockets.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Net.WebSockets.Client.1.0.0-preview.89\lib\System.Net.WebSockets.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Threading, Version=1.0.4.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
