@@ -12,8 +12,7 @@ This API mirrors (as close as possible) the official .NET [Microsoft.AspNetCore.
 
 | Component | Build Status | NuGet Package |
 |:-|---|---|
-| nanoFramework.SignalR.Client | [![Build Status](https://dev.azure.com/nanoframework/nanoFramework.SignalR.Client/_apis/build/status/nanoframework.nanoFramework.SignalR.Client?branchName=main)](https://dev.azure.com/nanoframework/nanoFramework.SignalR.Client/_build/latest?definitionId=91&branchName=main) | [![NuGet](https://img.shields.io/nuget/v/nanoFramework.SignalR.Client.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.SignalR.Client/) |
-| nanoFramework.SignalR.Client (preview) | [![Build Status](https://dev.azure.com/nanoframework/nanoFramework.SignalR.Client/_apis/build/status/nanoframework.nanoFramework.SignalR.Client?branchName=develop)](https://dev.azure.com/nanoframework/nanoFramework.SignalR.Client/_build/latest?definitionId=91&branchName=develop) | [![NuGet](https://img.shields.io/nuget/vpre/nanoFramework.SignalR.Client.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.SignalR.Client/) |
+| nanoFramework.SignalR.Client | [![Build Status](https://dev.azure.com/nanoframework/nanoFramework.SignalR.Client/_apis/build/status/nanoFramework.SignalR.Client?repoName=nanoframework%2FnanoFramework.SignalR.Client&branchName=main)](https://dev.azure.com/nanoframework/nanoFramework.SignalR.Client/_build/latest?definitionId=91&repoName=nanoframework%2FnanoFramework.SignalR.Client&branchName=main) | [![NuGet](https://img.shields.io/nuget/v/nanoFramework.SignalR.Client.svg?label=NuGet&style=flat&logo=nuget)](https://www.nuget.org/packages/nanoFramework.SignalR.Client/) |
 
 # Usage
 
