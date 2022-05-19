@@ -6,6 +6,7 @@
 
 **Documentation and other chores:**
 
+- Update 2 NuGet dependencies [\#44](https://github.com/nanoframework/nanoFramework.SignalR.Client/pull/44)
 - Update 2 NuGet dependencies [\#43](https://github.com/nanoframework/nanoFramework.SignalR.Client/pull/43)
 
 ## [v1.0.0](https://github.com/nanoframework/nanoFramework.SignalR.Client/tree/v1.0.0) (2022-03-29)
