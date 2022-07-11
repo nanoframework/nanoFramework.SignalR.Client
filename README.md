@@ -144,7 +144,7 @@ if ((bool)dashboardClientConnected.Value)
 Define methods the hub calls using connection.On after building, but before starting the connection.
 
 ```csharp
-connection.On<string, string>("ReceiveMessage", (sender, args) =>
+connection.On("ReceiveMessage", new Type[] { typeof(string), typeof(string) }, (sender, args) =>
 {
     var name = args[0] as string;
     var message = args[1] as string;
