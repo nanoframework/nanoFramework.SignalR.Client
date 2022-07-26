@@ -19,7 +19,7 @@
     <tags>nanoFramework C# csharp netmf netnf SignalR</tags>
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.12.0" />
-      <dependency id="nanoFramework.Json" version="2.1.3.3" />
+      <dependency id="nanoFramework.Json" version="2.1.3.5" />
       <dependency id="nanoFramework.System.Net.WebSockets.Client" version="1.0.1.25" />
     </dependencies>
   </metadata>
