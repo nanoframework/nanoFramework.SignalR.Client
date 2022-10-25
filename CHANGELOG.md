@@ -1,8 +1,8 @@
 # Changelog
 
-## [**Changes available only in 'Preview' NuGet packages:**](https://github.com/nanoframework/nanoFramework.SignalR.Client/tree/HEAD)
+## [v1.1.26](https://github.com/nanoframework/nanoFramework.SignalR.Client/tree/v1.1.26) (2022-10-24)
 
-[Full Changelog](https://github.com/nanoframework/nanoFramework.SignalR.Client/compare/v1.1.24...HEAD)
+[Full Changelog](https://github.com/nanoframework/nanoFramework.SignalR.Client/compare/v1.1.24...v1.1.26)
 
 **Documentation and other chores:**
 
