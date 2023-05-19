@@ -283,10 +283,22 @@ namespace nanoFramework.SignalR.Client
                 State = HubConnectionState.Connecting;
             }
 
-            _websocketClient = new ClientWebSocket();
+            // compose client websocket options with what we have
+            var clientWebSocketOptions = new ClientWebSocketOptions()
+            {
+                Certificate = _hubConnectionOptions.Certificate,
+                SslVerification = _hubConnectionOptions.SslVerification,
+                SslProtocol = _hubConnectionOptions.SslProtocol
+            };
+
+            // now create the websocket client with the options
+            _websocketClient = new ClientWebSocket(clientWebSocketOptions);
+
             _websocketClient.MessageReceived += WebsocketClient_MessageReceived;
             _websocketClient.ConnectionClosed += WebSocketClient_Closed;
+
             string websocketException = string.Empty;
+
             try
             {
                 _websocketClient.Connect(Uri, CustomHeaders);
