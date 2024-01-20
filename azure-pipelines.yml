@@ -41,11 +41,17 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  DOTNET_NOLOGO: true
-  solution: 'nanoFramework.SignalR.Client.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
-  nugetPackageName: 'nanoFramework.SignalR.Client'
+  - group: sign-client-credentials
+  - name: DOTNET_NOLOGO
+    value: true  
+  - name: buildPlatform
+    value: 'Any CPU'  
+  - name: buildConfiguration
+    value: 'Release'
+  - name: solution
+    value: 'nanoFramework.SignalR.Client.sln'
+  - name: nugetPackageName
+    value: 'nanoFramework.SignalR.Client'
 
 steps:
 
