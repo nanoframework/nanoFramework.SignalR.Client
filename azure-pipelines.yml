@@ -9,21 +9,14 @@ trigger:
       - release-*
   paths:
     exclude:
-      - .github_changelog_generator
       - .gitignore
       - CHANGELOG.md
-      - CODE_OF_CONDUCT.md
       - LICENSE.md
       - README.md
       - README.zh-cn.md
       - NuGet.Config
       - assets/*
-      - config/*
       - .github/*
-
-  tags:
-    include: 
-      - v*
 
 # PR always trigger build
 pr:
