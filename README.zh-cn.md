@@ -189,6 +189,6 @@ public async Task SendMessage(string user, string message)
 本项目采用了《贡献者盟约》所规定的行为准则，以澄清我们社区的预期行为。
 有关更多信息，请参阅 [.NET Foundation Code of Conduct](https://dotnetfoundation.org/code-of-conduct).
 
-### .NET Foundation
+## .NET Foundation
 
 这个项目是由 [.NET Foundation](https://dotnetfoundation.org) 支持.
