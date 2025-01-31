@@ -18,9 +18,9 @@
     <description>This package includes the nanoFramework.SignalR.Client assembly for .NET nanoFramework C# projects.</description>
     <tags>nanoFramework C# csharp netmf netnf SignalR</tags>
     <dependencies>
-      <dependency id="nanoFramework.CoreLibrary" version="1.15.5" />
-      <dependency id="nanoFramework.Json" version="2.2.160" />
-      <dependency id="nanoFramework.System.Net.WebSockets.Client" version="1.1.112" />
+      <dependency id="nanoFramework.CoreLibrary" version="1.16.1" />
+      <dependency id="nanoFramework.Json" version="2.2.164" />
+      <dependency id="nanoFramework.System.Net.WebSockets.Client" version="1.1.120" />
     </dependencies>
   </metadata>
   <files>
