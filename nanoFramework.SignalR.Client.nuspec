@@ -20,7 +20,7 @@
     <dependencies>
       <dependency id="nanoFramework.CoreLibrary" version="1.16.11" />
       <dependency id="nanoFramework.Json" version="2.2.171" />
-      <dependency id="nanoFramework.System.Net.WebSockets.Client" version="1.1.121" />
+      <dependency id="nanoFramework.System.Net.WebSockets.Client" version="1.1.122" />
     </dependencies>
   </metadata>
   <files>
