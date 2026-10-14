@@ -1,0 +1,23 @@
+# Copyright (c) .NET Foundation and Contributors
+# See LICENSE file in the project root for full license information.
+
+# This workflow will periodically check .NET nanoFramework preview dependencies and update them on develop.
+
+name: Daily update develop dependencies
+
+on:
+  schedule:
+  # At 00:20 UTC every Mon Thu.
+  - cron: '20 00 * * Mon,Thu'
+  repository_dispatch:
+    types: update-dependencies-develop
+
+jobs:
+  update-dependencies:
+    name: nanoFramework
+    uses: nanoframework/nf-tools/.github/workflows/update-dependencies.yml@main
+    secrets: inherit
+    with:
+      solutionsToCheck: 'nanoFramework.SignalR.Client.sln'
+      previewPackages: true
+      branchToPr: develop
