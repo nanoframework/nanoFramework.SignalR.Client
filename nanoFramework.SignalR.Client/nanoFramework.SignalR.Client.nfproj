@@ -83,7 +83,7 @@
       <HintPath>..\packages\nanoFramework.System.Net.2.0.0-preview.52\lib\netnano1.0\System.Net.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.WebSockets, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
-      <HintPath>..\packages\nanoFramework.System.Net.WebSockets.Client.2.0.0-preview.17\lib\netnano1.0\System.Net.WebSockets.dll</HintPath>
+      <HintPath>..\packages\nanoFramework.System.Net.WebSockets.Client.2.0.0-preview.19\lib\netnano1.0\System.Net.WebSockets.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.Threading.2.0.0-preview.20\lib\netnano1.0\System.Threading.dll</HintPath>
